@@ -1,6 +1,10 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.android.safeargs)
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -33,15 +37,51 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.6"
+    }
+    buildFeatures {
+        dataBinding = true
+        compose = true
+    }
 }
 
 dependencies {
+    implementation(libs.kotlin.stdlib)
+    implementation("androidx.compose.compiler:compiler:1.4.3")// 互換性のあるバージョンに更新
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation(libs.android.coreKtx)
+    implementation(libs.android.appcompat)
+
+    implementation(libs.android.lifecycle.viewmodel)
+    implementation(libs.android.lifecycle.savedstate)
+    implementation(libs.android.lifecycle.livedata)
+
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.uiTooling)
+
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.materialIcons)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.navigation)
+    implementation(libs.compose.viewmodel)
+    implementation(libs.compose.constraintlayout)
+    implementation(libs.compose.hilt)
+
+    implementation(libs.android.material3)
+
+    implementation(libs.daggerHilt.android)
+    kapt(libs.daggerHilt.compiler)
+
+    implementation(libs.kotlin.serialization.core)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.coroutine.android)
 }
