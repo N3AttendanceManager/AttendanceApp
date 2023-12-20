@@ -78,6 +78,9 @@ dependencies {
 
     implementation(libs.android.material3)
 
+    implementation(libs.tink)
+    implementation(libs.androidx.datastore)
+
     implementation(libs.daggerHilt.android)
     kapt(libs.daggerHilt.compiler)
 
