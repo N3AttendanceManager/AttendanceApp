@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @Singleton
 class TokenSerializer @Inject constructor(
     @ApplicationContext applicationContext: Context
-): Serializer<CredentialData> {
+) : Serializer<CredentialData> {
     private val aead: Aead by lazy {
         AeadConfig.register()
         val keySetHandle = AndroidKeysetManager.Builder()

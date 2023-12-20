@@ -11,7 +11,7 @@ class CredentialRepository @Inject constructor(
     private val authDataStore: DataStore<CredentialData>
 ) {
     fun getCredentialFlow(): Flow<CredentialData> = authDataStore.data
-    suspend fun setCredential(newValue: String){
+    suspend fun setCredential(newValue: String) {
         authDataStore.updateData { token ->
             token.copy(jwtToken = newValue)
         }
