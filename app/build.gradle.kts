@@ -100,4 +100,6 @@ dependencies {
     implementation(libs.kotlin.serialization.core)
     implementation(libs.kotlin.serialization.json)
     implementation(libs.kotlin.coroutine.android)
+
+    implementation(libs.kotlin.result)
 }

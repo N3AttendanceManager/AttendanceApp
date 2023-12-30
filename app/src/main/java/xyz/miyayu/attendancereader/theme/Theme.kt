@@ -49,8 +49,10 @@ fun AttendanceReaderTheme(
 
     val typography = MaterialTheme.typography.copy(
         titleMedium = MaterialTheme.typography.titleMedium.copy(
-            fontSize = 36.sp, fontWeight = FontWeight.Bold
-        ), labelMedium = MaterialTheme.typography.labelMedium.copy(
+            fontSize = 36.sp, fontWeight = FontWeight.Bold,
+            lineHeight = 40.sp
+        ),
+        labelMedium = MaterialTheme.typography.labelMedium.copy(
             fontSize = 16.sp,
         )
     )

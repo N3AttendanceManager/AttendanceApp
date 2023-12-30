@@ -45,8 +45,10 @@ kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidVersion" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 #
-tink = { module = "com.google.crypto.tink:tink-android" , version = "1.2.0"}
-androidx-datastore = { module = "androidx.datastore:datastore-preferences", version = "1.0.0"}
+tink = { module = "com.google.crypto.tink:tink-android", version = "1.2.0" }
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
+#
+kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.18" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidVersion" }

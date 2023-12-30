@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import xyz.miyayu.attendancereader.model.credential.CredentialData
 import xyz.miyayu.attendancereader.repository.CredentialRepository
 import javax.inject.Inject
 
@@ -15,9 +16,7 @@ class SettingTestViewModel @Inject constructor(
     val dataFlow = credentialRepository.getCredentialFlow()
     fun save(newValue: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            credentialRepository.setCredential(newValue)
+            credentialRepository.setCredential(CredentialData(jwtToken = newValue))
         }
     }
-
-
 }
