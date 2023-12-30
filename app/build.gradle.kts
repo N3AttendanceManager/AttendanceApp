@@ -22,12 +22,24 @@ android {
     }
 
     buildTypes {
+        val isDevServerFieldName = "IS_DEV_SERVER"
+        debug {
+            buildConfigField("boolean", isDevServerFieldName, "false")
+            applicationIdSuffix = ".dev"
+        }
+        // フェイクサーバーで動作するビルドタイプ
+        create("debugWithFakeServer") {
+            initWith(buildTypes.getByName("debug"))
+            applicationIdSuffix = ".dev.fakeserver"
+            buildConfigField("boolean", isDevServerFieldName, "true")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("boolean", isDevServerFieldName, "false")
         }
     }
     compileOptions {
@@ -43,6 +55,7 @@ android {
     buildFeatures {
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 }
 
