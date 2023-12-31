@@ -35,22 +35,27 @@ class TokenSerializer @Inject constructor(
         AeadFactory.getPrimitive(keySetHandle)
     }
 
-    override val defaultValue: CredentialData = CredentialData("")
+    override val defaultValue: CredentialData = CredentialData(null)
 
     override suspend fun readFrom(input: InputStream): CredentialData {
         val encrypted = input.readBytes()
 
         try {
-            val decrypted = aead.decrypt(encrypted, null)
+            val decrypted = String(aead.decrypt(encrypted, null))
 
-            return CredentialData(String(decrypted))
+            return if (decrypted.isEmpty()) {
+                CredentialData(null)
+            } else {
+                CredentialData(decrypted)
+            }
         } catch (exception: GeneralSecurityException) {
             throw CorruptionException("Cannot decrypt.", exception)
         }
     }
 
     override suspend fun writeTo(t: CredentialData, output: OutputStream) {
-        val encrypted = aead.encrypt(t.jwtToken.toByteArray(), null)
+        val token = t.jwtToken ?: ""
+        val encrypted = aead.encrypt(token.toByteArray(), null)
         output.write(encrypted)
     }
 }

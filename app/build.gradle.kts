@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "xyz.miyayu.attendancereader"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -102,4 +102,6 @@ dependencies {
     implementation(libs.kotlin.coroutine.android)
 
     implementation(libs.kotlin.result)
+
+    implementation(libs.jwt)
 }
