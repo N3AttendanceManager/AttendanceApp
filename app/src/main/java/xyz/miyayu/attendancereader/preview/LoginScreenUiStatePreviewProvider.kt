@@ -4,12 +4,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import xyz.miyayu.attendancereader.viewmodel.LoginScreenViewModel
 
 class LoginScreenUiStatePreviewProvider :
-    PreviewParameterProvider<LoginScreenViewModel.LoginScreenUiState> {
-    override val values: Sequence<LoginScreenViewModel.LoginScreenUiState>
+    PreviewParameterProvider<LoginScreenViewModel.UiState> {
+    override val values: Sequence<LoginScreenViewModel.UiState>
         get() = sequenceOf(
-            LoginScreenViewModel.LoginScreenUiState.Initial,
-            LoginScreenViewModel.LoginScreenUiState.Loading,
-            LoginScreenViewModel.LoginScreenUiState.Failed,
-            LoginScreenViewModel.LoginScreenUiState.Successful
+            LoginScreenViewModel.UiState.Initial,
+            LoginScreenViewModel.UiState.Loading,
+            LoginScreenViewModel.UiState.Failed,
+            LoginScreenViewModel.UiState.Successful
         )
 }

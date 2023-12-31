@@ -9,8 +9,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,13 +43,32 @@ fun LoginRoute(
     modifier: Modifier = Modifier,
     loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
 ) {
+    val snackBarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        loginScreenViewModel.uiEvents.collect { events ->
+            events.forEach { event ->
+                when (event) {
+                    LoginScreenViewModel.UiEvent.Success -> {
+                        loginScreenViewModel.consumeUiEvents(event = event)
+                    }
+
+                    LoginScreenViewModel.UiEvent.Error -> {
+                        loginScreenViewModel.consumeUiEvents(event = event)
+                        snackBarHostState.showSnackbar(message = "ログインに失敗しました");
+                    }
+                }
+            }
+        }
+    }
 
     val uiState by loginScreenViewModel.uiState.collectAsState()
     LoginScreen(
         modifier = modifier,
         onSignIn = loginScreenViewModel::signIn,
         isLoginButtonEnabled = uiState.isLoginButtonEnabled,
-        isShowLoading = uiState.isShowLoading
+        isShowLoading = uiState.isShowLoading,
+        snackBarHostState = snackBarHostState
     )
 }
 
@@ -53,17 +76,23 @@ fun LoginRoute(
 private fun LoginScreen(
     isLoginButtonEnabled: Boolean,
     isShowLoading: Boolean,
+    snackBarHostState: SnackbarHostState,
     onSignIn: (SignInFormData) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
-    LoginScreenBody(
-        onSignIn = onSignIn,
-        modifier = modifier,
-        isLoginButtonEnabled = isLoginButtonEnabled
-    )
-    if (isShowLoading)
-        LoadingCircle(modifier = modifier)
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
+        modifier = modifier
+    ) {
+        Box(modifier = Modifier.padding(it)) {
+            LoginScreenBody(
+                onSignIn = onSignIn,
+                isLoginButtonEnabled = isLoginButtonEnabled
+            )
+            if (isShowLoading)
+                LoadingCircle(modifier = modifier.padding(it))
+        }
+    }
 }
 
 @Composable
@@ -132,7 +161,7 @@ private fun LoadingCircle(
 @Preview(showBackground = true)
 @Composable
 private fun LoginScreenPreview(
-    @PreviewParameter(LoginScreenUiStatePreviewProvider::class) uiState: LoginScreenViewModel.LoginScreenUiState
+    @PreviewParameter(LoginScreenUiStatePreviewProvider::class) uiState: LoginScreenViewModel.UiState
 ) {
     AttendanceReaderTheme {
         Scaffold {
@@ -140,7 +169,8 @@ private fun LoginScreenPreview(
                 modifier = Modifier.padding(it),
                 onSignIn = { _ -> },
                 isLoginButtonEnabled = uiState.isLoginButtonEnabled,
-                isShowLoading = uiState.isShowLoading
+                isShowLoading = uiState.isShowLoading,
+                snackBarHostState = remember { SnackbarHostState() }
             )
         }
     }

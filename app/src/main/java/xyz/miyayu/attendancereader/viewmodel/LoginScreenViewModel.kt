@@ -17,29 +17,51 @@ class LoginScreenViewModel @Inject constructor(
     private val signInWithoutCacheUseCase: SignInWithoutCacheUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<LoginScreenUiState>(LoginScreenUiState.Initial)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState = _uiState.asStateFlow()
+
+    private val _uiEvents = MutableStateFlow<List<UiEvent>>(emptyList())
+    val uiEvents = _uiEvents.asStateFlow()
     fun signIn(formData: SignInFormData) {
-        _uiState.value = LoginScreenUiState.Loading
+        _uiState.value = UiState.Loading
 
         viewModelScope.launch(Dispatchers.IO) {
             signInWithoutCacheUseCase
                 .execute(formData = formData)
                 .mapBoth(
-                    success = { _uiState.value = LoginScreenUiState.Successful },
-                    failure = { _uiState.value = LoginScreenUiState.Failed }
+                    success = {
+                        _uiState.value = UiState.Successful
+                        addUiEvents(event = UiEvent.Success)
+                    },
+                    failure = {
+                        _uiState.value = UiState.Failed
+                        addUiEvents(event = UiEvent.Error)
+                    }
                 )
         }
     }
 
-    sealed class LoginScreenUiState(
+    fun consumeUiEvents(event: UiEvent) {
+        _uiEvents.value = _uiEvents.value.filter { it != event }
+    }
+
+    private fun addUiEvents(event: UiEvent) {
+        _uiEvents.value = _uiEvents.value + event
+    }
+
+    sealed class UiState(
         val isLoginButtonEnabled: Boolean,
         val isShowLoading: Boolean = false
     ) {
-        data object Initial : LoginScreenUiState(isLoginButtonEnabled = true)
-        data object Loading : LoginScreenUiState(isLoginButtonEnabled = false, isShowLoading = true)
-        data object Failed : LoginScreenUiState(isLoginButtonEnabled = true)
+        data object Initial : UiState(isLoginButtonEnabled = true)
+        data object Loading : UiState(isLoginButtonEnabled = false, isShowLoading = true)
+        data object Failed : UiState(isLoginButtonEnabled = true)
 
-        data object Successful : LoginScreenUiState(isLoginButtonEnabled = false)
+        data object Successful : UiState(isLoginButtonEnabled = false)
+    }
+
+    sealed class UiEvent() {
+        data object Error : UiEvent()
+        data object Success : UiEvent()
     }
 }
