@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.miyayu.attendancereader.theme.AttendanceReaderTheme
-import xyz.miyayu.attendancereader.view.route.LoginRoute
+import xyz.miyayu.attendancereader.view.NavHost
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -17,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AttendanceReaderTheme {
-                LoginRoute(modifier = Modifier.imePadding())
+                NavHost()
             }
         }
     }

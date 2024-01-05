@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import xyz.miyayu.attendancereader.Destinations
 import xyz.miyayu.attendancereader.R
 import xyz.miyayu.attendancereader.model.credential.SignInFormData
 import xyz.miyayu.attendancereader.preview.LoginScreenUiStatePreviewProvider
@@ -41,7 +43,8 @@ import xyz.miyayu.attendancereader.viewmodel.LoginScreenViewModel
 @Composable
 fun LoginRoute(
     modifier: Modifier = Modifier,
-    loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
+    loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -52,6 +55,12 @@ fun LoginRoute(
                 when (event) {
                     LoginScreenViewModel.UiEvent.Success -> {
                         loginScreenViewModel.consumeUiEvents(event = event)
+                        navController.navigate(Destinations.Top.route){
+                            popUpTo(Destinations.Login.route){
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     }
 
                     LoginScreenViewModel.UiEvent.Error -> {
