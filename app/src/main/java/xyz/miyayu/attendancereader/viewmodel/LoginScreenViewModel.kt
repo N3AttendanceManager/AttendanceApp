@@ -9,12 +9,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import xyz.miyayu.attendancereader.model.credential.SignInFormData
+import xyz.miyayu.attendancereader.usecase.auth.SignInWithCacheUseCase
 import xyz.miyayu.attendancereader.usecase.auth.SignInWithoutCacheUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val signInWithoutCacheUseCase: SignInWithoutCacheUseCase
+    private val signInWithoutCacheUseCase: SignInWithoutCacheUseCase,
+    private val signInWithCacheUseCase: SignInWithCacheUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
@@ -43,6 +45,27 @@ class LoginScreenViewModel @Inject constructor(
 
     fun consumeUiEvents(event: UiEvent) {
         _uiEvents.value = _uiEvents.value.filter { it != event }
+    }
+
+    fun loadCredential() {
+        _uiState.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            signInWithCacheUseCase.execute().mapBoth(
+                success = {
+                    if (it) {
+                        _uiState.value = UiState.Successful
+                        addUiEvents(event = UiEvent.Success)
+                    } else {
+                        _uiState.value = UiState.Failed
+                        addUiEvents(event = UiEvent.Error)
+                    }
+                },
+                failure = {
+                    _uiState.value = UiState.Failed
+                    addUiEvents(event = UiEvent.Error)
+                }
+            )
+        }
     }
 
     private fun addUiEvents(event: UiEvent) {

@@ -21,21 +21,32 @@ import javax.inject.Singleton
 @Singleton
 class FakeAuthRepository @Inject constructor(
 ) : AuthRepository {
-    override suspend fun fetchNewJwtToken(formData: SignInFormData): Result<CredentialData, Throwable> {
+    override suspend fun refreshJwtToken(formData: SignInFormData): Result<CredentialData, Throwable> {
         delay(1000)
         return if (formData.id == "admin" && formData.password == "admin") {
-            val algorithm: Algorithm = Algorithm.HMAC256("secret")
-            // 1時間後の時間
-            val jwtToken = JWT.create()
-                .withIssuedAt(Instant.now())
-                .withIssuer("Debug Server")
-                .withJWTId(UUID.randomUUID().toString())
-                .withExpiresAt(Instant.now().plus(1, ChronoUnit.DAYS))
-                .sign(algorithm)
-
+            val jwtToken = createNewJwtToken()
             Log.d(this::class.simpleName, "Created JwtToken: $jwtToken")
             return Ok(CredentialData(jwtToken = jwtToken))
         } else
             Err(IllegalStateException("認証に失敗しました"))
+    }
+
+    override suspend fun refreshJwtToken(credentialData: CredentialData): Result<CredentialData, Throwable> {
+        delay(1000)
+        if (credentialData.jwtToken == null) {
+            return Err(IllegalStateException("空のJWTトークンが渡されました"))
+        }
+        return Ok(CredentialData(jwtToken = createNewJwtToken()))
+    }
+
+    private fun createNewJwtToken(): String {
+        val algorithm: Algorithm = Algorithm.HMAC256("secret")
+        // 1時間後の時間
+        return JWT.create()
+            .withIssuedAt(Instant.now())
+            .withIssuer("Debug Server")
+            .withJWTId(UUID.randomUUID().toString())
+            .withExpiresAt(Instant.now().plus(1, ChronoUnit.DAYS))
+            .sign(algorithm)
     }
 }

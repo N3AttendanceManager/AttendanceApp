@@ -5,5 +5,6 @@ import xyz.miyayu.attendancereader.model.credential.CredentialData
 import xyz.miyayu.attendancereader.model.credential.SignInFormData
 
 interface AuthRepository {
-    suspend fun fetchNewJwtToken(formData: SignInFormData): Result<CredentialData, Throwable>
+    suspend fun refreshJwtToken(formData: SignInFormData): Result<CredentialData, Throwable>
+    suspend fun refreshJwtToken(credentialData: CredentialData): Result<CredentialData, Throwable>
 }

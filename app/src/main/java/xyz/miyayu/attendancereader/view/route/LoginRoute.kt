@@ -46,6 +46,7 @@ fun LoginRoute(
     val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
+        loginScreenViewModel.loadCredential()
         loginScreenViewModel.uiEvents.collect { events ->
             events.forEach { event ->
                 when (event) {

@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import xyz.miyayu.attendancereader.model.credential.CredentialData
 import javax.inject.Inject
 import javax.inject.Singleton
