@@ -11,19 +11,18 @@ import kotlinx.coroutines.launch
 import xyz.miyayu.attendancereader.model.credential.SignInFormData
 import xyz.miyayu.attendancereader.usecase.auth.SignInWithCacheUseCase
 import xyz.miyayu.attendancereader.usecase.auth.SignInWithoutCacheUseCase
+import xyz.miyayu.attendancereader.util.UiEventViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
     private val signInWithoutCacheUseCase: SignInWithoutCacheUseCase,
     private val signInWithCacheUseCase: SignInWithCacheUseCase
-) : ViewModel() {
+) : UiEventViewModel<LoginScreenViewModel.UiEvent>() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState = _uiState.asStateFlow()
 
-    private val _uiEvents = MutableStateFlow<List<UiEvent>>(emptyList())
-    val uiEvents = _uiEvents.asStateFlow()
     fun signIn(formData: SignInFormData) {
         _uiState.value = UiState.Loading
 
@@ -41,10 +40,6 @@ class LoginScreenViewModel @Inject constructor(
                     }
                 )
         }
-    }
-
-    fun consumeUiEvents(event: UiEvent) {
-        _uiEvents.value = _uiEvents.value.filter { it != event }
     }
 
     fun loadCredential() {
@@ -68,9 +63,6 @@ class LoginScreenViewModel @Inject constructor(
         }
     }
 
-    private fun addUiEvents(event: UiEvent) {
-        _uiEvents.value = _uiEvents.value + event
-    }
 
     sealed class UiState(
         val isLoginButtonEnabled: Boolean,
