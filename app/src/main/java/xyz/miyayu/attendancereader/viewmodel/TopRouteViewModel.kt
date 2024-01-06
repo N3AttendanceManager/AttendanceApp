@@ -9,13 +9,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import xyz.miyayu.attendancereader.repository.CredentialRepository
-import xyz.miyayu.attendancereader.util.UiEventViewModel
+import xyz.miyayu.attendancereader.util.StatefulViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class TopRouteViewModel @Inject constructor(
     private val credentialRepository: CredentialRepository
-) : UiEventViewModel<TopRouteViewModel.UiEvent>() {
+) : StatefulViewModel<TopRouteViewModel.UiEvent, Unit>(
+    initialState = Unit
+) {
 
     private val _enableSignOut = MutableStateFlow(true)
     val enableSignOut = _enableSignOut.asStateFlow()
