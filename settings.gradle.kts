@@ -25,3 +25,8 @@ include(":feature:login")
 include(":core:common")
 include(":core:domain")
 include(":core:network")
+include(":feature:home")
+include(":feature:settings")
+include(":feature:clazz")
+
+

@@ -2,4 +2,7 @@
     <string name="app_name">出欠席アプリ</string>
     <string name="id">ID</string>
     <string name="password">パスワード</string>
+    <string name="navbar_home">ホーム</string>
+    <string name="navbar_class">授業</string>
+    <string name="navbar_settings">設定</string>
 </resources>

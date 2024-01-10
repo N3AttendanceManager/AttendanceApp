@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
-import xyz.miyayu.attendancereader.view.NavHost
+import xyz.miyayu.attendancereader.ui.ArApp
 
 @AndroidEntryPoint
 class TopActivity : ComponentActivity() {
@@ -16,9 +16,7 @@ class TopActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AttendanceReaderTheme {
-                NavHost(
-                    onSignOut = this::onSignOut
-                )
+                ArApp()
             }
         }
     }

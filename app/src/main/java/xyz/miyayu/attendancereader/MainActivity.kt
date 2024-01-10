@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
 import xyz.miyayu.attendancereader.login.LoginRoute
-import xyz.miyayu.attendancereader.view.NavHost
 
 /**
  * 起動時のアクティビティ。ログイン画面
