@@ -1,20 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.android.safeargs)
-    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.attendancereader.android.application)
+    alias(libs.plugins.attendancereader.android.application.compose)
+    alias(libs.plugins.attendancereader.android.hilt)
+    alias(libs.plugins.attendancereader.android.application.flavors)
+
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "xyz.miyayu.attendancereader"
-    compileSdk = 34
 
     defaultConfig {
         applicationId = "xyz.miyayu.attendancereader"
-        minSdk = 26
-        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -22,16 +20,8 @@ android {
     }
 
     buildTypes {
-        val isDevServerFieldName = "IS_DEV_SERVER"
         debug {
-            buildConfigField("boolean", isDevServerFieldName, "false")
             applicationIdSuffix = ".dev"
-        }
-        // フェイクサーバーで動作するビルドタイプ
-        create("debugWithFakeServer") {
-            initWith(buildTypes.getByName("debug"))
-            applicationIdSuffix = ".dev.fakeserver"
-            buildConfigField("boolean", isDevServerFieldName, "true")
         }
         release {
             isMinifyEnabled = false
@@ -39,23 +29,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("boolean", isDevServerFieldName, "false")
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
-    }
-    buildFeatures {
-        dataBinding = true
-        compose = true
-        buildConfig = true
     }
 }
 
@@ -71,31 +45,18 @@ dependencies {
     implementation(libs.android.lifecycle.savedstate)
     implementation(libs.android.lifecycle.livedata)
 
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
 
-    implementation(libs.compose.runtime)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.uiTooling)
-
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.materialIcons)
     implementation(libs.compose.activity)
     implementation(libs.compose.navigation)
-    implementation(libs.compose.viewmodel)
+
     implementation(libs.compose.constraintlayout)
-    implementation(libs.compose.hilt)
 
     implementation(libs.android.material3)
 
     implementation(libs.tink)
     implementation(libs.androidx.datastore)
 
-    implementation(libs.daggerHilt.android)
-    kapt(libs.daggerHilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.kotlin.serialization.core)
     implementation(libs.kotlin.serialization.json)
@@ -104,4 +65,14 @@ dependencies {
     implementation(libs.kotlin.result)
 
     implementation(libs.jwt)
+
+    // 一時的に入ってもらった
+    implementation(libs.androidx.ui.tooling.preview.android)
+
+    implementation(projects.core.designsystem)
+    implementation(projects.core.model)
+    implementation(projects.core.datastore)
+
+    implementation(projects.feature.login)
+
 }

@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
-import xyz.miyayu.attendancereader.theme.AttendanceReaderTheme
+import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
 import xyz.miyayu.attendancereader.view.NavHost
 
 @AndroidEntryPoint

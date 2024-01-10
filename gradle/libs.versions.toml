@@ -1,29 +1,43 @@
 [versions]
 kotlinVersion = "1.9.21"
+androidDesugarJdkLibs = "2.0.4"
 navigationVersion = "2.7.5"
 lifecycleVersion = "2.6.2"
-androidVersion = "8.2.0"
+androidVersion = "8.2.1"
 hiltVersion = "2.48"
 serializationVersion = "1.4.1"
 coroutineVersion = "1.7.3"
+kspVersion = "1.9.21-1.0.16"
+
+androidxComposeCompilerVersion = "1.5.6"
+core-ktx = "1.12.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+uiToolingPreviewAndroid = "1.5.4"
+org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
 #
 compose-bom = "androidx.compose:compose-bom:2023.10.01"
-compose-runtime = { module = "androidx.compose.runtime:runtime" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
-compose-material = { module = "androidx.compose.material:material" }
+compose-runtime = { module = "androidx.compose.runtime:runtime" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-materialIcons = { module = "androidx.compose.material:material-icons-extended" }
 compose-activity = "androidx.activity:activity-compose:1.8.1"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationVersion" }
-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleVersion" }
 compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+# AndroidFeatureConventionPlugin で使用
+androidx-hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.1.0"
+androidx-lifecycle-viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleVersion" }
+
 #
-compose-hilt = "androidx.hilt:hilt-navigation-compose:1.1.0"
-#
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 android-coreKtx = "androidx.core:core-ktx:1.12.0"
 android-appcompat = "androidx.appcompat:appcompat:1.6.1"
 #
@@ -34,9 +48,9 @@ android-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-k
 android-material3 = { module = "androidx.compose.material3:material3", version = "1.1.2" }
 #
 kotlin-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutineVersion" }
-#
-daggerHilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
-daggerHilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
+# AndroidHiltConventionPlugin で使用
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
 #
 kotlin-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serializationVersion" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationVersion" }
@@ -51,15 +65,33 @@ androidx-datastore = { module = "androidx.datastore:datastore-preferences", vers
 kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.18" }
 #
 jwt = { "module" = "com.auth0:java-jwt", version = "4.4.0" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidVersion" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
+android-library = { id = "com.android.library", version.ref = "androidVersion" }
 #
-android-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationVersion" }
-#
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 #
 daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 #
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
+
+# Plugins
+attendancereader-android-application = { id = "attendancereader.android.application", version = "unspecified" }
+attendancereader-android-application-compose = { id = "attendancereader.android.application.compose", version = "unspecified" }
+attendancereader-android-hilt = { id = "attendancereader.android.hilt", version = "unspecified" }
+attendancereader-android-library = { id = "attendancereader.android.library", version = "unspecified" }
+attendancereader-android-library-compose = { id = "attendancereader.android.library.compose", version = "unspecified" }
+attendancereader-android-application-flavors = { id = "attendancereader.android.application.flavors", version = "unspecified" }
+attendancereader-android-feature = { id = "attendancereader.android.feature", version = "unspecified" }
+
+attendancereader-jvm-library = { id = "attendancereader.jvm.library", version = "unspecified" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }

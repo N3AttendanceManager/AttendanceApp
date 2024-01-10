@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import xyz.miyayu.attendancereader.repository.CredentialRepository
-import xyz.miyayu.attendancereader.util.StatefulViewModel
+import xyz.miyayu.attendancereader.datastore.CredentialRepository
+import xyz.miyayu.attendancereader.designsystem.viewmodel.StatefulViewModel
 import javax.inject.Inject
 
 @HiltViewModel

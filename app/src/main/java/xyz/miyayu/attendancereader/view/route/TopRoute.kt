@@ -12,25 +12,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import xyz.miyayu.attendancereader.Destinations
-import xyz.miyayu.attendancereader.view.common.AttendanceButton
+import xyz.miyayu.attendancereader.designsystem.component.AttendanceButton
+import xyz.miyayu.attendancereader.login.backToLoginScreen
 import xyz.miyayu.attendancereader.viewmodel.TopRouteViewModel
 
 @Composable
 fun TopRoute(
-    navController: NavController,
     viewModel: TopRouteViewModel = hiltViewModel(),
+    onLogout: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.uiEvents.collect { events ->
             events.forEach { event ->
                 when (event) {
                     TopRouteViewModel.UiEvent.SuccessSignOut -> {
-                        navController.navigate(Destinations.Login.route) {
-                            popUpTo(Destinations.Top.route) {
-                                inclusive = true
-                            }
-                            launchSingleTop = true
-                        }
+                        onLogout.invoke()
                     }
                 }
                 viewModel.consumeUiEvents(event = event)

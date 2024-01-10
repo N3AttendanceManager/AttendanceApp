@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -14,4 +15,13 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AttendanceReader"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+include(":core:designsystem")
+include(":core:model")
+include(":core:datastore")
+include(":feature:login")
+include(":core:common")
+include(":core:domain")
+include(":core:network")
