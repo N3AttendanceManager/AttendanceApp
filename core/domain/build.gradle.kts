@@ -9,10 +9,13 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.model)
+    api(projects.core.model)
+
+    api(libs.kotlin.result)
+    api(libs.kotlin.result.coroutines)
+
     implementation(projects.core.network)
     implementation(projects.core.datastore)
 
-    implementation(libs.kotlin.result)
 
 }

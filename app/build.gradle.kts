@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.attendancereader.android.hilt)
     alias(libs.plugins.attendancereader.android.application.flavors)
 
-    alias(libs.plugins.kotlin.serialization)
     id("com.google.dagger.hilt.android")
 }
 
@@ -58,8 +57,6 @@ dependencies {
 
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(libs.kotlin.serialization.core)
-    implementation(libs.kotlin.serialization.json)
     implementation(libs.kotlin.coroutine.android)
 
     implementation(libs.kotlin.result)

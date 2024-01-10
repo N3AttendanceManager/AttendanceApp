@@ -17,7 +17,8 @@ fun ArNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = HOME_SCREEN_ROUTE
+        startDestination = HOME_SCREEN_ROUTE,
+        modifier = modifier
     ){
         homeScreen()
         settingScreen()

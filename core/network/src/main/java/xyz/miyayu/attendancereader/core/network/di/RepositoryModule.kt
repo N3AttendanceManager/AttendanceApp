@@ -7,6 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import xyz.miyayu.attendancereader.core.network.AuthRepository
 import xyz.miyayu.attendancereader.core.network.BuildConfig
 import xyz.miyayu.attendancereader.core.network.FakeAuthRepository
+import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
+import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
+import xyz.miyayu.attendancereader.core.network.subject.FakeSubjectRepository
+import xyz.miyayu.attendancereader.core.network.subject.SubjectRepository
+import xyz.miyayu.attendancereader.model.Department
 import javax.inject.Singleton
 
 @Module
@@ -19,6 +24,30 @@ object RepositoryModule {
     ): AuthRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeAuthRepository
+        } else {
+            TODO("本番環境が実装されたらそれを返す")
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideSubjectRepository(
+        fakeSubjectRepository: FakeSubjectRepository,
+    ): SubjectRepository {
+        return if (BuildConfig.IS_DEV_SERVER) {
+            fakeSubjectRepository
+        } else {
+            TODO("本番環境が実装されたらそれを返す")
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideDepartmentRepository(
+        fakeDepartmentRepository: FakeDepartmentRepository,
+    ): DepartmentRepository {
+        return if (BuildConfig.IS_DEV_SERVER) {
+            fakeDepartmentRepository
         } else {
             TODO("本番環境が実装されたらそれを返す")
         }

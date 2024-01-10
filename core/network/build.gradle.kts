@@ -10,7 +10,9 @@ android {
 
 dependencies {
     implementation(projects.core.model)
-    implementation(libs.kotlin.result)
+
+    api(libs.kotlin.result)
+    api(libs.kotlin.result.coroutines)
 
     //モックサーバーで使用する
     implementation(libs.jwt)

@@ -12,6 +12,8 @@ fun NavController.navigateToClassScreen(navOptions: NavOptions) =
 
 fun NavGraphBuilder.classScreen() {
     composable(route = CLASS_SCREEN_ROUTE) {
-        ClassScreen()
+        ClassScreen(
+            onSubjectSelect = {}
+        )
     }
 }
