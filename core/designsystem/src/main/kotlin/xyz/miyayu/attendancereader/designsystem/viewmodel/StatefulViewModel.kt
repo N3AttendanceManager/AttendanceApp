@@ -11,7 +11,7 @@ abstract class StatefulViewModel<T, H>(
 
     private val _uiState = MutableStateFlow<H>(initialState)
     val uiState = _uiState.asStateFlow()
-    
+
     private val _uiEvents = MutableStateFlow<List<T>>(emptyList())
     val uiEvents = _uiEvents.asStateFlow()
 

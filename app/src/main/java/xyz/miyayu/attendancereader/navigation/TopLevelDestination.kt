@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import xyz.miyayu.attendancereader.R
 
 enum class TopLevelDestination(
-     @StringRes val titleTextId: Int
+    @StringRes val titleTextId: Int
 ) {
     HOME(
         titleTextId = R.string.navbar_home

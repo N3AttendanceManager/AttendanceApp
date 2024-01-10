@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.model.credential.CredentialData
 import xyz.miyayu.attendancereader.model.credential.SignInUserInputData
@@ -13,7 +14,6 @@ import java.time.temporal.ChronoUnit
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
-import com.github.michaelbull.result.Result
 
 
 /**

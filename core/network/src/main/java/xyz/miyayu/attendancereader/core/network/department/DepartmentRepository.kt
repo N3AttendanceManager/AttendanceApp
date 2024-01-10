@@ -4,5 +4,5 @@ import com.github.michaelbull.result.Result
 import xyz.miyayu.attendancereader.model.Department
 
 interface DepartmentRepository {
-    suspend fun getAllDepartment(): Result<List<Department>,Throwable>
+    suspend fun getAllDepartment(): Result<List<Department>, Throwable>
 }

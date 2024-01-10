@@ -28,14 +28,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.miyayu.attendancereader.designsystem.component.AttendanceButton
 import xyz.miyayu.attendancereader.designsystem.component.AttendanceTextField
 import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
-import androidx.hilt.navigation.compose.hiltViewModel
-import xyz.miyayu.attendancereader.core.common.R as R2
 import xyz.miyayu.attendancereader.feature.login.R
 import xyz.miyayu.attendancereader.model.credential.SignInUserInputData
+import xyz.miyayu.attendancereader.core.common.R as R2
 
 @Composable
 fun LoginRoute(

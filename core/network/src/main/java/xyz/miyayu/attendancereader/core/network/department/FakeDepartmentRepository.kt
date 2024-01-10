@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeDepartmentRepository @Inject constructor(
 
-): DepartmentRepository {
+) : DepartmentRepository {
     override suspend fun getAllDepartment(): Result<List<Department>, Throwable> = Ok(
         listOf(
             Department(id = 1, name = "ITスペシャリスト科"),

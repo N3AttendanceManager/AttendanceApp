@@ -63,7 +63,7 @@ tink = { module = "com.google.crypto.tink:tink-android", version = "1.2.0" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
 #
 kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.18" }
-kotlin-result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version = "1.1.18"}
+kotlin-result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version = "1.1.18" }
 #
 jwt = { "module" = "com.auth0:java-jwt", version = "4.4.0" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }

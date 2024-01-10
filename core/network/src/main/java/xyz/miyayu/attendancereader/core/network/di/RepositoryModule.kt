@@ -11,7 +11,6 @@ import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
 import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
 import xyz.miyayu.attendancereader.core.network.subject.FakeSubjectRepository
 import xyz.miyayu.attendancereader.core.network.subject.SubjectRepository
-import xyz.miyayu.attendancereader.model.Department
 import javax.inject.Singleton
 
 @Module

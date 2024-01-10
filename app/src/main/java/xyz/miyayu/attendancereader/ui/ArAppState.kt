@@ -1,10 +1,8 @@
 package xyz.miyayu.attendancereader.ui
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.core.os.trace
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -19,7 +17,6 @@ import xyz.miyayu.attendancereader.feature.home.navigateToHomeScreen
 import xyz.miyayu.attendancereader.feature.settings.SETTING_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.settings.navigateToSettingScreen
 import xyz.miyayu.attendancereader.navigation.TopLevelDestination
-import java.lang.IllegalStateException
 
 
 @Composable

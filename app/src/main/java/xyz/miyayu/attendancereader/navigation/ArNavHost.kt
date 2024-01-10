@@ -13,13 +13,13 @@ import xyz.miyayu.attendancereader.ui.ArAppState
 fun ArNavHost(
     appState: ArAppState,
     modifier: Modifier
-){
+) {
     val navController = appState.navController
     NavHost(
         navController = navController,
         startDestination = HOME_SCREEN_ROUTE,
         modifier = modifier
-    ){
+    ) {
         homeScreen()
         settingScreen()
         classScreen()

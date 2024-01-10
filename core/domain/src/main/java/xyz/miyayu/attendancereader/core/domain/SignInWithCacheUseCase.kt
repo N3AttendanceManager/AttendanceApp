@@ -20,7 +20,8 @@ class SignInWithCacheUseCase @Inject constructor(
     private val credentialRepository: CredentialRepository,
 ) {
     suspend fun execute(): Result<Boolean, Throwable> {
-        val credentialData = credentialRepository.getCredentialFlow().firstOrNull() ?: return Ok(false)
+        val credentialData =
+            credentialRepository.getCredentialFlow().firstOrNull() ?: return Ok(false)
         return authRepository.refreshJwtToken(credentialData)
             .flatMap { credentialRepository.setCredential(it) }
             .mapBoth(

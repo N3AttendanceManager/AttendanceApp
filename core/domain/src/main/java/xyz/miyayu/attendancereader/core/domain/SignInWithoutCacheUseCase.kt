@@ -3,8 +3,8 @@ package xyz.miyayu.attendancereader.core.domain
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.flatMap
 import xyz.miyayu.attendancereader.core.network.AuthRepository
-import xyz.miyayu.attendancereader.model.credential.SignInUserInputData
 import xyz.miyayu.attendancereader.datastore.CredentialRepository
+import xyz.miyayu.attendancereader.model.credential.SignInUserInputData
 import javax.inject.Inject
 import javax.inject.Singleton
 

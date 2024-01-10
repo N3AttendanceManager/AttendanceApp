@@ -3,6 +3,7 @@ package xyz.miyayu.attendancereader.feature.clazz
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -86,6 +87,7 @@ private fun SubjectTile(
         text = text,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
+            .fillMaxWidth()
             .clickable(onClick = isClick)
             .padding(vertical = 16.dp, horizontal = 8.dp)
     )

@@ -8,4 +8,5 @@ dependencies {
     implementation(libs.jwt)
 
     implementation(libs.kotlin.serialization.core)
-    implementation(libs.kotlin.serialization.json)}
+    implementation(libs.kotlin.serialization.json)
+}

@@ -1,7 +1,5 @@
 package xyz.miyayu.attendancereader
 
-import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.ApplicationProductFlavor
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.ProductFlavor
 
@@ -28,15 +26,15 @@ fun configureFlavors(
 ) {
     commonExtension.apply {
         buildTypes {
-            val debug = getByName("debug"){
-                buildConfigField("boolean","IS_DEV_SERVER","false")
+            val debug = getByName("debug") {
+                buildConfigField("boolean", "IS_DEV_SERVER", "false")
             }
-            getByName("release"){
-                buildConfigField("boolean","IS_DEV_SERVER","false")
+            getByName("release") {
+                buildConfigField("boolean", "IS_DEV_SERVER", "false")
             }
-            create("debugWithFakeServer"){
+            create("debugWithFakeServer") {
                 initWith(debug)
-                buildConfigField("boolean","IS_DEV_SERVER","true")
+                buildConfigField("boolean", "IS_DEV_SERVER", "true")
             }
         }
         buildFeatures {
