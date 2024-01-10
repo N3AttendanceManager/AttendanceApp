@@ -7,27 +7,25 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
-import xyz.miyayu.attendancereader.login.LoginRoute
 import xyz.miyayu.attendancereader.view.NavHost
 
-/**
- * 起動時のアクティビティ。ログイン画面
- */
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class TopActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AttendanceReaderTheme {
-                LoginRoute(onLoginSuccess = this::onSignIn)
+                NavHost(
+                    onSignOut = this::onSignOut
+                )
             }
         }
     }
 
-    private fun onSignIn() {
-        val intent = Intent(this, TopActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        this.startActivity(intent)
+    private fun onSignOut() {
+        val intent = Intent(this, MainActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }

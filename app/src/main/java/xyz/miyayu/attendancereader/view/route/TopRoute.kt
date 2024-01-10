@@ -10,10 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import xyz.miyayu.attendancereader.Destinations
 import xyz.miyayu.attendancereader.designsystem.component.AttendanceButton
-import xyz.miyayu.attendancereader.login.backToLoginScreen
 import xyz.miyayu.attendancereader.viewmodel.TopRouteViewModel
 
 @Composable

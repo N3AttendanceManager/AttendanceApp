@@ -38,7 +38,7 @@ import xyz.miyayu.attendancereader.feature.login.R
 import xyz.miyayu.attendancereader.model.credential.SignInUserInputData
 
 @Composable
-internal fun LoginRoute(
+fun LoginRoute(
     modifier: Modifier = Modifier,
     loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
     onLoginSuccess: () -> Unit
