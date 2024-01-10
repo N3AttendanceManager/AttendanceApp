@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
 import xyz.miyayu.attendancereader.feature.clazz.CLASS_SCREEN_ROUTE
-import xyz.miyayu.attendancereader.feature.clazz.navigateToClassScreen
+import xyz.miyayu.attendancereader.feature.clazz.navigateToSubjectScreen
 import xyz.miyayu.attendancereader.feature.home.HOME_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.home.navigateToHomeScreen
 import xyz.miyayu.attendancereader.feature.settings.SETTING_SCREEN_ROUTE
@@ -60,7 +60,7 @@ class ArAppState(
 
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHomeScreen(topLevelNavOptions)
-            TopLevelDestination.CLASS -> navController.navigateToClassScreen(topLevelNavOptions)
+            TopLevelDestination.CLASS -> navController.navigateToSubjectScreen(topLevelNavOptions)
             TopLevelDestination.SETTINGS -> navController.navigateToSettingScreen(topLevelNavOptions)
         }
     }

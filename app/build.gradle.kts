@@ -73,5 +73,5 @@ dependencies {
     implementation(projects.feature.login)
     implementation(projects.feature.home)
     implementation(projects.feature.settings)
-    implementation(projects.feature.clazz)
+    implementation(projects.feature.subjects)
 }

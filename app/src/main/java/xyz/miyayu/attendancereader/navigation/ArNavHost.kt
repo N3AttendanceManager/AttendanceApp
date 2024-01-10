@@ -3,7 +3,7 @@ package xyz.miyayu.attendancereader.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import xyz.miyayu.attendancereader.feature.clazz.classScreen
+import xyz.miyayu.attendancereader.feature.clazz.subjectScreen
 import xyz.miyayu.attendancereader.feature.home.HOME_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.home.homeScreen
 import xyz.miyayu.attendancereader.feature.settings.settingScreen
@@ -22,6 +22,6 @@ fun ArNavHost(
     ) {
         homeScreen()
         settingScreen()
-        classScreen()
+        subjectScreen()
     }
 }

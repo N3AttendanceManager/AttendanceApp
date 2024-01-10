@@ -7,12 +7,12 @@ import androidx.navigation.compose.composable
 
 const val CLASS_SCREEN_ROUTE = "class_screen"
 
-fun NavController.navigateToClassScreen(navOptions: NavOptions) =
+fun NavController.navigateToSubjectScreen(navOptions: NavOptions) =
     navigate(CLASS_SCREEN_ROUTE, navOptions)
 
-fun NavGraphBuilder.classScreen() {
+fun NavGraphBuilder.subjectScreen() {
     composable(route = CLASS_SCREEN_ROUTE) {
-        ClassScreen(
+        SubjectScreen(
             onSubjectSelect = {}
         )
     }

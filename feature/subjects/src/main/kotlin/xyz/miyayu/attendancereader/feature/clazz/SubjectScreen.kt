@@ -20,8 +20,8 @@ import xyz.miyayu.attendancereader.model.Department
 import xyz.miyayu.attendancereader.model.Subject
 
 @Composable
-internal fun ClassScreen(
-    viewModel: TopViewModel = hiltViewModel(),
+internal fun SubjectScreen(
+    viewModel: SubjectViewModel = hiltViewModel(),
     onSubjectSelect: (Subject) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -31,7 +31,7 @@ internal fun ClassScreen(
     val subjects by viewModel.subjects.collectAsState()
     val departments by viewModel.departments.collectAsState()
 
-    ClassRoute(
+    SubjectRoute(
         subjects = subjects,
         departments = departments,
         isSelected = onSubjectSelect
@@ -39,7 +39,7 @@ internal fun ClassScreen(
 }
 
 @Composable
-private fun ClassRoute(
+private fun SubjectRoute(
     subjects: List<Subject>,
     departments: List<Department>,
     isSelected: (Subject) -> Unit,
