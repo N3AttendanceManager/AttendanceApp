@@ -63,9 +63,6 @@ dependencies {
 
     implementation(libs.jwt)
 
-    // 一時的に入ってもらった
-    implementation(libs.androidx.ui.tooling.preview.android)
-
     implementation(projects.core.designsystem)
     implementation(projects.core.model)
     implementation(projects.core.datastore)
@@ -74,4 +71,5 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.settings)
     implementation(projects.feature.subjects)
+    implementation(projects.feature.classlist)
 }

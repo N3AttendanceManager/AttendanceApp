@@ -30,3 +30,4 @@ include(":feature:settings")
 include(":feature:subjects")
 
 
+include(":feature:classlist")

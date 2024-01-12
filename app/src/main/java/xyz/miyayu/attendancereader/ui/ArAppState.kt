@@ -10,8 +10,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
-import xyz.miyayu.attendancereader.feature.clazz.CLASS_SCREEN_ROUTE
-import xyz.miyayu.attendancereader.feature.clazz.navigateToSubjectScreen
+import xyz.miyayu.attendancereader.feature.classlist.CLASS_SCREEN_ROUTE
+import xyz.miyayu.attendancereader.feature.classlist.navigateToSubjectScreen
 import xyz.miyayu.attendancereader.feature.home.HOME_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.home.navigateToHomeScreen
 import xyz.miyayu.attendancereader.feature.settings.SETTING_SCREEN_ROUTE

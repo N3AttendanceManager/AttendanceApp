@@ -1,4 +1,4 @@
-package xyz.miyayu.attendancereader.feature.clazz
+package xyz.miyayu.attendancereader.feature.classlist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

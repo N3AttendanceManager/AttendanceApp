@@ -1,4 +1,4 @@
-package xyz.miyayu.attendancereader.feature.clazz
+package xyz.miyayu.attendancereader.feature.classlist
 
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import xyz.miyayu.attendancereader.core.domain.GetSubjectAndDepartmentUseCase
 import xyz.miyayu.attendancereader.designsystem.viewmodel.StatefulViewModel
-import xyz.miyayu.attendancereader.feature.clazz.state.top.SubjectUiState
+import xyz.miyayu.attendancereader.feature.classlist.state.top.SubjectUiState
 import xyz.miyayu.attendancereader.model.Department
 import xyz.miyayu.attendancereader.model.Subject
 import javax.inject.Inject

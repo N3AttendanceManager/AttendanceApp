@@ -1,4 +1,4 @@
-package xyz.miyayu.attendancereader.feature.clazz.state.top
+package xyz.miyayu.attendancereader.feature.classlist.state.top
 
 sealed interface SubjectUiState {
     data object Nothing : SubjectUiState
