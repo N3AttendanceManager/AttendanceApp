@@ -24,7 +24,9 @@ fun ArNavHost(
     ) {
         homeScreen()
         settingScreen()
-        classesScreen()
+        classesScreen(
+            onNewClassClick = { subject -> /* TODO */ }
+        )
         subjectScreen(
             onSubjectSelect = { subject ->
                 navController.navigateToClasses(subjectId = subject.id)

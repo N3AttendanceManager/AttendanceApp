@@ -10,10 +10,13 @@ import javax.inject.Singleton
 class FakeDepartmentRepository @Inject constructor(
 
 ) : DepartmentRepository {
-    override suspend fun getAllDepartment(): Result<List<Department>, Throwable> = Ok(
-        listOf(
-            Department(id = 1, name = "ITスペシャリスト科"),
-            Department(id = 2, name = "コンサートイベント科")
-        )
+    private val departments = listOf(
+        Department(id = 1, name = "ITスペシャリスト科"),
+        Department(id = 2, name = "コンサートイベント科")
     )
+
+    override suspend fun getAllDepartment(): Result<List<Department>, Throwable> = Ok(departments)
+
+    override suspend fun getDepartment(departmentId: Int): Result<Department?, Throwable> =
+        Ok(departments.find { it.id == departmentId })
 }
