@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 enum class ClassTimes(
+
     val startHour: Int,
     val startMinute: Int,
     val endHour: Int,

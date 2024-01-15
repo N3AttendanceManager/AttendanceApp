@@ -1,11 +1,36 @@
 package xyz.miyayu.attendancereader.feature.classlist
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.miyayu.attendancereader.designsystem.component.AttendanceButton
 import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
+
 
 @Composable
 internal fun ClassAddRoute(
@@ -45,11 +70,64 @@ internal fun ClassAddRoute(
 private fun ClassAddScreen(
     onSelectedClassTime: (ClassTimes) -> Unit
 ) {
-    AttendanceButton(onClick = {
-        onSelectedClassTime.invoke(ClassTimes.One)
-    }, text = "追加")
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Dropdown()
+        AttendanceButton(
+            onClick = { onSelectedClassTime.invoke(ClassTimes.One) },
+            text = "追加"
+        )
+    }
+
+
     //TODO 画面の実装をここにする！
 }
+
+@Composable
+fun Dropdown() {
+    val options = listOf("Option1", "Option2", "Option3", "Option4", "Option5")
+    val expanded = remember { mutableStateOf(false) }
+    val selectedOptionText = remember { mutableStateOf(options[0]) }
+
+    Box(
+        contentAlignment = Alignment.CenterStart,
+        modifier = Modifier
+            .size(250.dp, 50.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .border(BorderStroke(1.dp, Color.LightGray), RoundedCornerShape(4.dp))
+            .clickable { expanded.value = !expanded.value },
+    ) {
+        Text(
+            text = selectedOptionText.value,
+            modifier = Modifier.padding(start = 10.dp)
+        )
+        Icon(
+            Icons.Filled.ArrowDropDown, "contentDescription",
+            Modifier.align(Alignment.CenterEnd)
+        )
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false }
+        ) {
+            options.forEach { selectionOption ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedOptionText.value = selectionOption
+                        expanded.value = false
+                    }
+                ) {
+                    Text(text = selectionOption)
+                }
+            }
+        }
+    }
+}
+
 
 @Preview
 @Composable
