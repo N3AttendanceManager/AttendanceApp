@@ -1,9 +1,11 @@
 package xyz.miyayu.attendancereader.feature.classlist
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
+import xyz.miyayu.attendancereader.model.AtClass
 import xyz.miyayu.attendancereader.model.Subject
+import java.time.LocalDateTime
 
 @Composable
 internal fun ClassRoute(
@@ -20,8 +24,9 @@ internal fun ClassRoute(
     onNewClassClick: (Subject) -> Unit
 ) {
     val subject by viewModel.department.collectAsState()
+    val classList by viewModel.atClassList.collectAsState()
     ClassScreen(
-        subject = subject,
+        classList = classList,
         onNewClassClick = {
             subject?.let {
                 onNewClassClick.invoke(it)
@@ -32,12 +37,19 @@ internal fun ClassRoute(
 
 @Composable
 private fun ClassScreen(
-    subject: Subject?,
+    classList: List<AtClass>,
     onNewClassClick: () -> Unit
 ) {
-    ClassRouteAppBar(
-        onNewClassClick = onNewClassClick
-    )
+    Column {
+        ClassRouteAppBar(
+            onNewClassClick = onNewClassClick
+        )
+        classList.forEach { atClass ->
+            //TODO タイル状にする
+            Text(text = atClass.start.toString())
+        }
+
+    }
 }
 
 @Composable
@@ -63,6 +75,21 @@ private fun ClassRouteAppBar(
 @Composable
 fun ClassRouteAppBarPreview() {
     PreviewSurface {
-        ClassScreen(subject = Subject(id = 1, name = "英語", departmentId = 1)) {}
+        ClassScreen(
+            classList = listOf(
+                AtClass(
+                    id = 1,
+                    subjectId = 1,
+                    start = LocalDateTime.of(2024, 1, 1, 9, 30),
+                    end = LocalDateTime.of(2024, 1, 1, 11, 0)
+                ),
+                AtClass(
+                    id = 2,
+                    subjectId = 1,
+                    start = LocalDateTime.of(2024, 1, 1, 11, 0),
+                    end = LocalDateTime.of(2024, 1, 1, 12, 40)
+                ),
+            )
+        ) {}
     }
 }

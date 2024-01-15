@@ -3,7 +3,9 @@ package xyz.miyayu.attendancereader.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import xyz.miyayu.attendancereader.feature.classlist.classAddScreen
 import xyz.miyayu.attendancereader.feature.classlist.classesScreen
+import xyz.miyayu.attendancereader.feature.classlist.navigateToClassAdd
 import xyz.miyayu.attendancereader.feature.classlist.navigateToClasses
 import xyz.miyayu.attendancereader.feature.classlist.subjectScreen
 import xyz.miyayu.attendancereader.feature.home.HOME_SCREEN_ROUTE
@@ -25,7 +27,16 @@ fun ArNavHost(
         homeScreen()
         settingScreen()
         classesScreen(
-            onNewClassClick = { subject -> /* TODO */ }
+            onNewClassClick = { subject ->
+                navController.navigateToClassAdd(
+                    subjectId = subject.id
+                )
+            }
+        )
+        classAddScreen(
+            onClassAddFinished = {
+                navController.popBackStack()
+            }
         )
         subjectScreen(
             onSubjectSelect = { subject ->
