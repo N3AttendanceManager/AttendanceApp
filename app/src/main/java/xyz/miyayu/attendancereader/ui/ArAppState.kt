@@ -43,7 +43,7 @@ class ArAppState(
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             HOME_SCREEN_ROUTE -> TopLevelDestination.HOME
-            SETTING_SCREEN_ROUTE -> TopLevelDestination.SETTINGS
+            SETTING_SCREEN_ROUTE -> TopLevelDestination.SETTING
             CLASS_SCREEN_ROUTE -> TopLevelDestination.CLASS
             else -> null
         }
@@ -61,7 +61,7 @@ class ArAppState(
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHomeScreen(topLevelNavOptions)
             TopLevelDestination.CLASS -> navController.navigateToSubjectScreen(topLevelNavOptions)
-            TopLevelDestination.SETTINGS -> navController.navigateToSettingScreen(topLevelNavOptions)
+            TopLevelDestination.SETTING -> navController.navigateToSettingScreen(topLevelNavOptions)
         }
     }
 }

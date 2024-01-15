@@ -12,7 +12,7 @@ enum class TopLevelDestination(
     CLASS(
         titleTextId = R.string.navbar_class
     ),
-    SETTINGS(
+    SETTING(
         titleTextId = R.string.navbar_settings
     )
 }

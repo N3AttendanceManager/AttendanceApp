@@ -15,7 +15,7 @@ internal class ClazzArgs(val subjectId: Int) {
 }
 
 fun NavController.navigateToClasses(subjectId: Int) {
-    navigate("classes_route/$subjectId ")
+    navigate("classes_route/$subjectId")
 }
 
 fun NavGraphBuilder.classesScreen() {

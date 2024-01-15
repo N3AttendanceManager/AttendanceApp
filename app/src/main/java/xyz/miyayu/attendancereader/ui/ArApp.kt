@@ -1,5 +1,6 @@
 package xyz.miyayu.attendancereader.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
@@ -9,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import xyz.miyayu.attendancereader.designsystem.component.ArNavigationBar
 import xyz.miyayu.attendancereader.designsystem.component.ArNavigationBarItem
 import xyz.miyayu.attendancereader.navigation.ArNavHost
@@ -22,7 +25,7 @@ fun ArApp(
         bottomBar = {
             ArAppNavigationBar(
                 destinations = TopLevelDestination.entries.toTypedArray().toList(),
-                currentDestination = arAppState.currentTopLevelDestination,
+                currentDestination = arAppState.currentDestination,
                 onNavigateToDestination = arAppState::navigateToTopLevelDestination
             )
         }
@@ -38,15 +41,16 @@ fun ArApp(
 private fun ArAppNavigationBar(
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
-    currentDestination: TopLevelDestination?,
+    currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
+    Log.d("Current", currentDestination?.hierarchy?.toList().toString())
 
     ArNavigationBar(
         modifier = modifier
     ) {
         destinations.forEach {
-            val selected = currentDestination == it
+            val selected = currentDestination.isTopLevelDestinationInHierarchy(it)
             ArNavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination.invoke(it) },
@@ -62,3 +66,8 @@ private fun ArAppNavigationBar(
         }
     }
 }
+
+private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.name, true) ?: false
+    } ?: false

@@ -24,11 +24,11 @@ fun ArNavHost(
     ) {
         homeScreen()
         settingScreen()
+        classesScreen()
         subjectScreen(
             onSubjectSelect = { subject ->
                 navController.navigateToClasses(subjectId = subject.id)
             }
         )
-        classesScreen()
     }
 }
