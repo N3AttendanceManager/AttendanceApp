@@ -3,7 +3,9 @@ package xyz.miyayu.attendancereader.core.network.atclass
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import xyz.miyayu.attendancereader.model.AtClass
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,13 +33,15 @@ class FakeClassRepository @Inject constructor() : ClassRepository {
 
     override suspend fun createAtClass(
         subjectId: Int,
-        start: LocalDateTime,
-        end: LocalDateTime
+        start: LocalTime,
+        end: LocalTime
     ): Result<Unit, Throwable> {
         atClassList.add(
             AtClass(
                 id = ++incrementNumber,
-                subjectId = subjectId, start = start, end = end
+                subjectId = subjectId,
+                start = start.atDate(LocalDate.now()),
+                end = end.atDate(LocalDate.now())
             )
         )
         return Ok(Unit)

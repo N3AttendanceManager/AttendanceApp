@@ -27,6 +27,8 @@ fun NavGraphBuilder.classAddScreen(
             navArgument(SUBJECT_ADD_ARG) { type = NavType.IntType }
         )
     ) {
-        ClassAddRoute()
+        ClassAddRoute(
+            onCreated = onClassAddFinished
+        )
     }
 }
