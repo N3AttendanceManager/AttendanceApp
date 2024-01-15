@@ -7,7 +7,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,28 +15,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
 import xyz.miyayu.attendancereader.model.AtClass
-import xyz.miyayu.attendancereader.model.Subject
 import java.time.LocalDateTime
 
 @Composable
 internal fun ClassRoute(
     viewModel: ClassViewModel = hiltViewModel(),
-    onNewClassClick: (Subject) -> Unit
+    onNewClassClick: () -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setSubjectId(1)
-        viewModel.fetchClassList()
-        viewModel.fetchSubject()
-    }
-    val subject by viewModel.department.collectAsState()
     val classList by viewModel.atClassList.collectAsState()
     ClassScreen(
         classList = classList,
-        onNewClassClick = {
-            subject?.let {
-                onNewClassClick.invoke(it)
-            }
-        }
+        onNewClassClick = onNewClassClick
     )
 }
 
