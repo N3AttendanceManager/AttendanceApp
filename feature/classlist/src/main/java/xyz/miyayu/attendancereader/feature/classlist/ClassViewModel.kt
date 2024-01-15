@@ -20,7 +20,7 @@ class ClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val subjectRepository: SubjectRepository,
     private val classRepository: ClassRepository
-) : StatefulViewModel<Unit, Unit>(
+) : StatefulViewModel<ClassAddUiEvents, Unit>(
     initialState = Unit
 ) {
     val department = MutableStateFlow<Subject?>(null)
@@ -39,6 +39,20 @@ class ClassViewModel @Inject constructor(
 
         }
     }
+
+    fun createNewClass(selectedClassTimes: ClassTimes) {
+        viewModelScope.launch(Dispatchers.IO) {
+            classRepository.createAtClass(
+                subjectId = subjectId,
+                start = selectedClassTimes.getStartDateTime(),
+                end = selectedClassTimes.getEndDateTime()
+            ).mapBoth(
+                success = { addUiEvents(ClassAddUiEvents.Success) },
+                failure = { addUiEvents(ClassAddUiEvents.Failed) }
+            )
+        }
+    }
+
 
 
     val subjectId = ClazzArgs(savedStateHandle).subjectId

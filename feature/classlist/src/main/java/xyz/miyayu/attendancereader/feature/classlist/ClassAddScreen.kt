@@ -9,7 +9,7 @@ import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
 
 @Composable
 internal fun ClassAddRoute(
-    viewModel: ClassAddViewModel = hiltViewModel(),
+    viewModel: ClassViewModel = hiltViewModel(),
     onCreated: () -> Unit
 ) {
     // UiEvent処理の振り分け
