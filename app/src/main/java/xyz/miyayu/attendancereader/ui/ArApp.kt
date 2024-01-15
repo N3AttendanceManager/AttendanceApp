@@ -1,7 +1,15 @@
 package xyz.miyayu.attendancereader.ui
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Icon
@@ -12,16 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.designsystem.component.ArNavigationBar
 import xyz.miyayu.attendancereader.designsystem.component.ArNavigationBarItem
 import xyz.miyayu.attendancereader.navigation.ArNavHost
 import xyz.miyayu.attendancereader.navigation.TopLevelDestination
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ArApp(
     arAppState: ArAppState = rememberArAppState()
 ) {
     Scaffold(
+
         bottomBar = {
             ArAppNavigationBar(
                 destinations = TopLevelDestination.entries.toTypedArray().toList(),
@@ -30,10 +41,26 @@ fun ArApp(
             )
         }
     ) {
-        ArNavHost(
-            appState = arAppState,
-            modifier = Modifier.padding(it)
-        )
+        Column(
+            modifier =
+            Modifier
+                .padding(it)
+                .consumeWindowInsets(it)
+                .windowInsetsPadding(
+                    WindowInsets.safeDrawing.only(
+                        WindowInsetsSides.Horizontal,
+                    ),
+                )
+        ) {
+            val currentTop = arAppState.currentTopLevelDestination
+            if (currentTop != null) {
+                ArAppBar(title = stringResource(id = currentTop.titleTextId))
+            }
+            ArNavHost(
+                appState = arAppState,
+            )
+        }
+
     }
 }
 

@@ -14,7 +14,7 @@ import xyz.miyayu.attendancereader.ui.ArAppState
 @Composable
 fun ArNavHost(
     appState: ArAppState,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val navController = appState.navController
     NavHost(
