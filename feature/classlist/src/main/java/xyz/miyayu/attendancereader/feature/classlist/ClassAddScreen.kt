@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -70,27 +71,25 @@ internal fun ClassAddRoute(
 private fun ClassAddScreen(
     onSelectedClassTime: (ClassTimes) -> Unit
 ) {
-
+    //TODO 画面の実装をここにする！
+    val selectedClassTime = remember { mutableStateOf(ClassTimes.One) }
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Dropdown()
+        Dropdown(selectedClassTime = selectedClassTime)
         AttendanceButton(
-            onClick = { onSelectedClassTime.invoke(ClassTimes.One) },
+            onClick = { onSelectedClassTime.invoke(selectedClassTime.value) },
             text = "追加"
         )
     }
-
-
-    //TODO 画面の実装をここにする！
 }
 
 @Composable
-fun Dropdown() {
-    val options = listOf("Option1", "Option2", "Option3", "Option4", "Option5")
+fun Dropdown(selectedClassTime: MutableState<ClassTimes>) {
+    val options = ClassTimes.entries.toTypedArray() // 時限のオプションClassTimes.values() // 時限のオプション
     val expanded = remember { mutableStateOf(false) }
     val selectedOptionText = remember { mutableStateOf(options[0]) }
 
@@ -103,7 +102,7 @@ fun Dropdown() {
             .clickable { expanded.value = !expanded.value },
     ) {
         Text(
-            text = selectedOptionText.value,
+            text = selectedOptionText.value.zigen,
             modifier = Modifier.padding(start = 10.dp)
         )
         Icon(
@@ -114,15 +113,16 @@ fun Dropdown() {
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            options.forEach { selectionOption ->
+            options.forEach { option ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedOptionText.value = selectionOption
+                        selectedOptionText.value = option
                         expanded.value = false
+                    },
+                    text = {
+                        Text(text = option.zigen)
                     }
-                ) {
-                    Text(text = selectionOption)
-                }
+                )
             }
         }
     }
