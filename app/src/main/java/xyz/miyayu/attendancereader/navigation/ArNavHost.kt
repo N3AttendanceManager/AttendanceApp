@@ -3,6 +3,8 @@ package xyz.miyayu.attendancereader.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import xyz.miyayu.attendancereader.classdetail.classDetailScreen
+import xyz.miyayu.attendancereader.classdetail.navigateToClassDetails
 import xyz.miyayu.attendancereader.feature.classlist.classesNavigation
 import xyz.miyayu.attendancereader.feature.classlist.navigateToClasses
 import xyz.miyayu.attendancereader.feature.classlist.subjectScreen
@@ -27,12 +29,18 @@ fun ArNavHost(
             navController = navController
         )
         classesNavigation(
-            navController = navController
+            navController = navController,
+            onClassSelected = { atClass ->
+                navController.navigateToClassDetails(classId = atClass.id)
+            }
         )
         subjectScreen(
             onSubjectSelect = { subject ->
                 navController.navigateToClasses(subjectId = subject.id)
             }
+        )
+        classDetailScreen(
+            navController = navController
         )
     }
 }
