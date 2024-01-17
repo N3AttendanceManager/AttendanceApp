@@ -6,9 +6,6 @@ import xyz.miyayu.attendancereader.R
 enum class TopLevelDestination(
     @StringRes val titleTextId: Int
 ) {
-    HOME(
-        titleTextId = R.string.navbar_home
-    ),
     CLASS(
         titleTextId = R.string.navbar_class
     ),

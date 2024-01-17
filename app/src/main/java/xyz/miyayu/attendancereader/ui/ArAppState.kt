@@ -12,8 +12,6 @@ import androidx.navigation.navOptions
 import kotlinx.coroutines.CoroutineScope
 import xyz.miyayu.attendancereader.feature.classlist.CLASS_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.classlist.navigateToSubjectScreen
-import xyz.miyayu.attendancereader.feature.home.HOME_SCREEN_ROUTE
-import xyz.miyayu.attendancereader.feature.home.navigateToHomeScreen
 import xyz.miyayu.attendancereader.feature.settings.SETTING_SCREEN_ROUTE
 import xyz.miyayu.attendancereader.feature.settings.navigateToSettingScreen
 import xyz.miyayu.attendancereader.navigation.TopLevelDestination
@@ -42,7 +40,6 @@ class ArAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
-            HOME_SCREEN_ROUTE -> TopLevelDestination.HOME
             SETTING_SCREEN_ROUTE -> TopLevelDestination.SETTING
             CLASS_SCREEN_ROUTE -> TopLevelDestination.CLASS
             else -> null
@@ -59,7 +56,6 @@ class ArAppState(
         }
 
         when (topLevelDestination) {
-            TopLevelDestination.HOME -> navController.navigateToHomeScreen(topLevelNavOptions)
             TopLevelDestination.CLASS -> navController.navigateToSubjectScreen(topLevelNavOptions)
             TopLevelDestination.SETTING -> navController.navigateToSettingScreen(topLevelNavOptions)
         }

@@ -1,6 +1,8 @@
 package xyz.miyayu.attendancereader.feature.classlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -11,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
@@ -20,19 +23,22 @@ import java.time.LocalDateTime
 @Composable
 internal fun ClassRoute(
     viewModel: ClassViewModel = hiltViewModel(),
-    onNewClassClick: () -> Unit
+    onNewClassClick: () -> Unit,
+    onClassSelected: (AtClass) -> Unit
 ) {
     val classList by viewModel.atClassList.collectAsState()
     ClassScreen(
         classList = classList,
-        onNewClassClick = onNewClassClick
+        onNewClassClick = onNewClassClick,
+        onClassSelected = onClassSelected
     )
 }
 
 @Composable
 private fun ClassScreen(
     classList: List<AtClass>,
-    onNewClassClick: () -> Unit
+    onNewClassClick: () -> Unit,
+    onClassSelected: (AtClass) -> Unit,
 ) {
     Column {
         ClassRouteAppBar(
@@ -40,7 +46,14 @@ private fun ClassScreen(
         )
         classList.forEach { atClass ->
             //TODO タイル状にする
-            Text(text = atClass.start.toString())
+            Text(
+                text = atClass.start.toString(),
+                modifier = Modifier
+                    .clickable {
+                        onClassSelected.invoke(atClass)
+                    }
+                    .padding(8.dp)
+            )
         }
 
     }
@@ -83,7 +96,10 @@ fun ClassRouteAppBarPreview() {
                     start = LocalDateTime.of(2024, 1, 1, 11, 0),
                     end = LocalDateTime.of(2024, 1, 1, 12, 40)
                 ),
-            )
-        ) {}
+
+                ),
+            onClassSelected = {},
+            onNewClassClick = {}
+        )
     }
 }

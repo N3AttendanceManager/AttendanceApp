@@ -11,6 +11,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import xyz.miyayu.attendancereader.model.AtClass
 
 internal const val SUBJECT_ID_ARG = "subjectId"
 
@@ -27,11 +28,14 @@ private fun NavController.navigateToNewClass() {
 }
 
 fun NavGraphBuilder.classesNavigation(
-    navController: NavController
+    navController: NavController,
+    onClassSelected: (AtClass) -> Unit,
 ) {
-    navigation(startDestination = "classes/top",
+    navigation(
+        startDestination = "classes/top",
         route = "classes_route/{$SUBJECT_ID_ARG}",
-        arguments = listOf(navArgument(SUBJECT_ID_ARG) { type = NavType.IntType })) {
+        arguments = listOf(navArgument(SUBJECT_ID_ARG) { type = NavType.IntType })
+    ) {
         composable(
             route = "classes/top",
         ) {
@@ -40,7 +44,8 @@ fun NavGraphBuilder.classesNavigation(
                     navController.navigateToNewClass()
                 }, viewModel = hiltViewModel(
                     viewModelStoreOwner = it.rememberParentEntry(navController = navController)
-                )
+                ),
+                onClassSelected = onClassSelected
             )
         }
         composable(
