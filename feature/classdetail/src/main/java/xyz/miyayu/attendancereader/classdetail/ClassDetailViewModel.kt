@@ -12,6 +12,7 @@ import xyz.miyayu.attendancereader.core.domain.model.AttendanceResources
 import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepository
 import xyz.miyayu.attendancereader.designsystem.viewmodel.StatefulViewModel
 import xyz.miyayu.attendancereader.model.Classifications
+import xyz.miyayu.attendancereader.model.Student
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,12 +26,24 @@ class ClassDetailViewModel @Inject constructor(
     private val _attendanceResources = MutableStateFlow<AttendanceResources?>(null)
     val attendanceResources = _attendanceResources.asStateFlow()
 
+    private val _lastScannedStudents = MutableStateFlow<Student?>(null)
+    val lastScannedStudents = _lastScannedStudents.asStateFlow()
+
+    private val _lastClassification = MutableStateFlow<Classifications?>(null)
+    val lastClassification = _lastClassification.asStateFlow()
+
     fun onCardScanned(idm: String, classifications: Classifications) {
         viewModelScope.launch {
             attendanceRepository.registerAttendance(
                 idm = idm,
                 classId = classId,
                 classificationId = classifications.id
+            ).mapBoth(
+                success = {
+                    _lastScannedStudents.value = it
+                    _lastClassification.value = classifications
+                },
+                failure = {}
             )
             fetchAttendanceResources()
         }

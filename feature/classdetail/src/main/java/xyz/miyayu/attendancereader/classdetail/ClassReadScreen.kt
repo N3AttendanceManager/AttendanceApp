@@ -1,5 +1,6 @@
 package xyz.miyayu.attendancereader.classdetail
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.InputChip
@@ -18,8 +19,11 @@ internal fun ClassReadRoute(
     viewModel: ClassDetailViewModel
 ) {
     val resources by viewModel.attendanceResources.collectAsState()
+    val lastScanned by viewModel.lastScannedStudents.collectAsState()
+    val lastClassification by viewModel.lastClassification.collectAsState()
     val classificationsList = resources?.classifications ?: emptyList()
     var selectedChip by remember { mutableIntStateOf(0) }
+
 
     RememberNfcRead(onRead = {
         viewModel.onCardScanned(
@@ -27,13 +31,17 @@ internal fun ClassReadRoute(
             classifications = classificationsList[selectedChip]
         )
     })
-    Row {
-        classificationsList.forEachIndexed { index, classifications ->
-            InputChip(
-                selected = index == selectedChip,
-                onClick = { selectedChip = index },
-                label = { Text(text = classifications.name) }
-            )
+    Column {
+        Row {
+            classificationsList.forEachIndexed { index, classifications ->
+                InputChip(
+                    selected = index == selectedChip,
+                    onClick = { selectedChip = index },
+                    label = { Text(text = classifications.name) }
+                )
+            }
         }
+        Text(text = "${lastScanned?.name} さんの出席を${lastClassification?.name}にしました")
     }
+
 }
