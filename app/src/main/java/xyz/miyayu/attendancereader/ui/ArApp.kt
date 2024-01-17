@@ -35,10 +35,15 @@ fun ArApp(
     Scaffold(
 
         bottomBar = {
+            val currentTop = arAppState.currentTopLevelDestination
             ArAppNavigationBar(
                 destinations = TopLevelDestination.entries.toTypedArray().toList(),
                 currentDestination = arAppState.currentDestination,
-                onNavigateToDestination = arAppState::navigateToTopLevelDestination
+                onNavigateToDestination = {
+                    arAppState.navigateToTopLevelDestination(
+                        it, currentTop
+                    )
+                }
             )
         }
     ) {
