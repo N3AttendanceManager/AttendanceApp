@@ -1,4 +1,4 @@
-package xyz.miyayu.attendancereader.nfc.felica
+package xyz.miyayu.attendancereader.feature.settings.nfc.felica
 
 import android.nfc.tech.NfcF
 import android.util.Log

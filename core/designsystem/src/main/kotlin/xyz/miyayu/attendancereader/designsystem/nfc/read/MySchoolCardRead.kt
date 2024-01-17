@@ -1,10 +1,10 @@
-package xyz.miyayu.attendancereader.nfc.read
+package xyz.miyayu.attendancereader.feature.settings.nfc.read
 
 import android.nfc.Tag
 import android.nfc.tech.NfcF
 import android.util.Log
-import xyz.miyayu.attendancereader.nfc.felica.FelicaUtil.read
-import xyz.miyayu.attendancereader.nfc.model.StudentNfcCard
+import xyz.miyayu.attendancereader.feature.settings.nfc.felica.FelicaUtil.read
+import xyz.miyayu.attendancereader.feature.settings.nfc.model.StudentNfcCard
 
 
 class MySchoolCardRead : CardReadInterface<StudentNfcCard.MySchoolCard> {

@@ -11,6 +11,8 @@ import xyz.miyayu.attendancereader.core.network.atclass.ClassRepository
 import xyz.miyayu.attendancereader.core.network.atclass.FakeClassRepository
 import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
 import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
+import xyz.miyayu.attendancereader.core.network.student.FakeStudentRepository
+import xyz.miyayu.attendancereader.core.network.student.StudentRepository
 import xyz.miyayu.attendancereader.core.network.subject.FakeSubjectRepository
 import xyz.miyayu.attendancereader.core.network.subject.SubjectRepository
 import javax.inject.Singleton
@@ -63,6 +65,18 @@ object RepositoryModule {
             fakeClassRepository
         } else {
             TODO("本番環境が実装されたらそれを返す")
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideStudentRepository(
+        fakeStudentRepository: FakeStudentRepository
+    ): StudentRepository {
+        return if (BuildConfig.IS_DEV_SERVER) {
+            fakeStudentRepository
+        } else {
+            TODO()
         }
     }
 }

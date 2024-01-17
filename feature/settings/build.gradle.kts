@@ -2,8 +2,15 @@
 plugins {
     alias(libs.plugins.attendancereader.android.feature)
     alias(libs.plugins.attendancereader.android.library.compose)
+
+    alias(libs.plugins.attendancereader.android.hilt)
 }
 
 android {
     namespace = "xyz.miyayu.attendancereader.feature.settings"
+}
+
+dependencies {
+    implementation(projects.core.model)
+    implementation(projects.core.network)
 }
