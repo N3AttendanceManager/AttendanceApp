@@ -4,12 +4,14 @@ import android.util.Log
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.get
+import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.core.network.student.FakeStudentRepository
 import xyz.miyayu.attendancereader.core.network.student.StudentRepository
 import xyz.miyayu.attendancereader.model.Attendance
 import xyz.miyayu.attendancereader.model.Student
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 @Singleton
 class FakeAttendanceRepository @Inject constructor(
@@ -25,14 +27,18 @@ class FakeAttendanceRepository @Inject constructor(
         )
     )
 
-    override suspend fun getAttendances(classId: Int): Result<List<Attendance>, Throwable> =
-        Ok(attendances.filter { classId == it.classId })
+    override suspend fun getAttendances(classId: Int): Result<List<Attendance>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(attendances.filter { classId == it.classId })
+    }
 
     override suspend fun registerAttendance(
         idm: String,
         classId: Int,
         classificationId: Int
     ): Result<Student?, Throwable> {
+        delay(Random.nextLong(1000))
+
         val student =
             studentRepository.getAllStudent().get()!!.firstOrNull { it.icId == idm }
                 ?: return Ok(null)
@@ -62,6 +68,8 @@ class FakeAttendanceRepository @Inject constructor(
         classId: Int,
         classificationId: Int
     ): Result<Student?, Throwable> {
+        delay(Random.nextLong(1000))
+
         val student =
             studentRepository.getAllStudent().get()!!.firstOrNull { it.id == studentId }
                 ?: return Ok(null)

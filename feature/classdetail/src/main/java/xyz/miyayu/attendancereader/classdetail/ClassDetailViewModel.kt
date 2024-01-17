@@ -20,7 +20,7 @@ class ClassDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val attendanceResourceUseCase: AttendanceResourceUseCase,
     private val attendanceRepository: AttendanceRepository
-) : StatefulViewModel<Unit, Unit>(initialState = Unit) {
+) : StatefulViewModel<Unit, UiState>(initialState = UiState.Normal) {
     val classId = savedStateHandle.get<Int>(CLASS_ID_ROUTE_ARG)!!
 
     private val _attendanceResources = MutableStateFlow<AttendanceResources?>(null)
@@ -34,6 +34,7 @@ class ClassDetailViewModel @Inject constructor(
 
     fun onCardScanned(idm: String, classifications: Classifications) {
         viewModelScope.launch {
+            setUiState(UiState.Loading)
             attendanceRepository.registerAttendance(
                 idm = idm,
                 classId = classId,
@@ -45,12 +46,14 @@ class ClassDetailViewModel @Inject constructor(
                 },
                 failure = {}
             )
+            setUiState(UiState.Normal)
             fetchAttendanceResources()
         }
     }
 
     fun onAttendanceManualSelected(student: Student, classifications: Classifications) {
         viewModelScope.launch {
+            setUiState(UiState.Loading)
             attendanceRepository.registerManualAttendance(
                 studentId = student.id,
                 classId = classId,
@@ -62,6 +65,7 @@ class ClassDetailViewModel @Inject constructor(
                 },
                 failure = {}
             )
+            setUiState(UiState.Normal)
             fetchAttendanceResources()
         }
 
@@ -69,11 +73,14 @@ class ClassDetailViewModel @Inject constructor(
 
     private fun fetchAttendanceResources() {
         viewModelScope.launch {
+            setUiState(UiState.Loading)
             attendanceResourceUseCase.execute(classId = classId)
                 .mapBoth(
                     success = { _attendanceResources.value = it },
                     failure = {},
                 )
+            setUiState(UiState.Normal)
+
         }
     }
 
