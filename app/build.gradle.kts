@@ -68,7 +68,6 @@ dependencies {
     implementation(projects.core.datastore)
 
     implementation(projects.feature.login)
-    implementation(projects.feature.home)
     implementation(projects.feature.settings)
     implementation(projects.feature.subjects)
     implementation(projects.feature.classlist)
