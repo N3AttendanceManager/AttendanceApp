@@ -11,4 +11,10 @@ interface AttendanceRepository {
         classId: Int,
         classificationId: Int
     ): Result<Student?, Throwable>
+
+    suspend fun registerManualAttendance(
+        studentId: Int,
+        classId: Int,
+        classificationId: Int
+    ): Result<Student?, Throwable>
 }

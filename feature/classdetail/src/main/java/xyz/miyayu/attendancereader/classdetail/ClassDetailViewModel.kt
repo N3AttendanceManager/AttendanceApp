@@ -49,6 +49,24 @@ class ClassDetailViewModel @Inject constructor(
         }
     }
 
+    fun onAttendanceManualSelected(student: Student, classifications: Classifications) {
+        viewModelScope.launch {
+            attendanceRepository.registerManualAttendance(
+                studentId = student.id,
+                classId = classId,
+                classificationId = classifications.id
+            ).mapBoth(
+                success = {
+                    _lastScannedStudents.value = it
+                    _lastClassification.value = classifications
+                },
+                failure = {}
+            )
+            fetchAttendanceResources()
+        }
+
+    }
+
     private fun fetchAttendanceResources() {
         viewModelScope.launch {
             attendanceResourceUseCase.execute(classId = classId)

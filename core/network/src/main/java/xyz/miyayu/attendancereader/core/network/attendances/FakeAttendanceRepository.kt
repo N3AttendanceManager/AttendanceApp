@@ -56,4 +56,33 @@ class FakeAttendanceRepository @Inject constructor(
         }
         return Ok(student)
     }
+
+    override suspend fun registerManualAttendance(
+        studentId: Int,
+        classId: Int,
+        classificationId: Int
+    ): Result<Student?, Throwable> {
+        val student =
+            studentRepository.getAllStudent().get()!!.firstOrNull { it.id == studentId }
+                ?: return Ok(null)
+
+        if (attendances.any { it.studentId == student.id && it.classId == classId }) {
+            attendances.replaceAll {
+                if (it.studentId == student.id && it.classId == classId) {
+                    Log.d("AttendanceRepository", "$it updated.")
+                    it.copy(teacherId = 1, classificationId = classificationId)
+                } else it
+            }
+        } else {
+            attendances.add(
+                Attendance(
+                    studentId = student.id,
+                    classId = classId,
+                    teacherId = 1,
+                    classificationId = classificationId
+                )
+            )
+        }
+        return Ok(student)
+    }
 }
