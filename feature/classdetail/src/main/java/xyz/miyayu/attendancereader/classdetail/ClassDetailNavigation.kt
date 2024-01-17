@@ -35,6 +35,7 @@ fun NavGraphBuilder.classDetailScreen(
             )
             ClassDetailRoute(
                 viewModel = classDetailViewModel,
+                onScanButton = {}
             )
         }
         composable(route = SCAN_ROUTE, arguments = arguments) {
