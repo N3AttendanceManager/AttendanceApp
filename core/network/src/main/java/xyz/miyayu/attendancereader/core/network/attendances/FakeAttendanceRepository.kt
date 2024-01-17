@@ -26,7 +26,7 @@ class FakeAttendanceRepository @Inject constructor(
     )
 
     override suspend fun getAttendances(classId: Int): Result<List<Attendance>, Throwable> =
-        Ok(attendances)
+        Ok(attendances.filter { classId == it.classId })
 
     override suspend fun registerAttendance(
         idm: String,
