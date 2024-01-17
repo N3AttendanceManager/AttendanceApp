@@ -1,5 +1,6 @@
 package xyz.miyayu.attendancereader.core.network.classifications
 
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import xyz.miyayu.attendancereader.model.Classifications
 import javax.inject.Inject
@@ -24,7 +25,6 @@ class FakeClassificationsRepository @Inject constructor() : ClassificationsRepos
         ),
     )
 
-    override suspend fun getClassifications(): Result<List<Classifications>, Throwable> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getClassifications(): Result<List<Classifications>, Throwable> =
+        Ok(classifications)
 }
