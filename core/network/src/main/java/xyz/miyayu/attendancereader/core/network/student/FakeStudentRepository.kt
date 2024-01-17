@@ -15,7 +15,11 @@ class FakeStudentRepository @Inject constructor() : StudentRepository {
             studentId = "S$index",
             name = "山田太郎$index",
             departmentId = 1,
-            icId = if (Random.nextBoolean()) null else "IC$index",
+            icId = when (index) {
+                2 -> "013ac121d5f09e31"
+                3 -> "012e5508f8458571"
+                else -> if (Random.nextBoolean()) null else "IC$index"
+            },
         )
     }.toMutableList()
 

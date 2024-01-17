@@ -13,33 +13,37 @@ import androidx.navigation.navArgument
 
 const val CLASS_ID_ROUTE_ARG = "class_id_arg"
 const val CLASS_DETAIL_ROUTE = "class_detail_screen/{$CLASS_ID_ROUTE_ARG}"
-private const val TOP_ROUTE = "${CLASS_DETAIL_ROUTE}/top"
-private const val SCAN_ROUTE = "${CLASS_DETAIL_ROUTE}/scan"
+private const val TOP_ROUTE = "class_detail_screens/top"
+private const val SCAN_ROUTE = "class_detail_screens/scan"
 
 fun NavController.navigateToClassDetails(classId: Int) {
     navigate("class_detail_screen/$classId")
 }
 
+private fun NavController.navigateToScan() {
+    navigate(SCAN_ROUTE)
+}
+
 fun NavGraphBuilder.classDetailScreen(
     navController: NavController
 ) {
-    val arguments = listOf(
-        navArgument(CLASS_ID_ROUTE_ARG) { type = NavType.IntType }
-    )
+    val arguments = listOf(navArgument(CLASS_ID_ROUTE_ARG) { type = NavType.IntType })
     navigation(
         route = CLASS_DETAIL_ROUTE, startDestination = TOP_ROUTE, arguments = arguments
     ) {
-        composable(route = TOP_ROUTE, arguments = arguments) {
+        composable(route = TOP_ROUTE) {
             val classDetailViewModel: ClassDetailViewModel = hiltViewModel(
                 viewModelStoreOwner = it.rememberParentEntry(navController = navController)
             )
-            ClassDetailRoute(
-                viewModel = classDetailViewModel,
-                onScanButton = {}
-            )
+            ClassDetailRoute(viewModel = classDetailViewModel,
+                onScanButton = { navController.navigateToScan() })
         }
-        composable(route = SCAN_ROUTE, arguments = arguments) {
-
+        composable(route = SCAN_ROUTE) {
+            ClassReadRoute(
+                viewModel = hiltViewModel(
+                    viewModelStoreOwner = it.rememberParentEntry(navController = navController)
+                )
+            )
         }
     }
 }

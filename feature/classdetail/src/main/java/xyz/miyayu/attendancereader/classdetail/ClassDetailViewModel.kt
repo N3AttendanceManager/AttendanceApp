@@ -9,20 +9,34 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import xyz.miyayu.attendancereader.core.domain.AttendanceResourceUseCase
 import xyz.miyayu.attendancereader.core.domain.model.AttendanceResources
+import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepository
 import xyz.miyayu.attendancereader.designsystem.viewmodel.StatefulViewModel
+import xyz.miyayu.attendancereader.model.Classifications
 import javax.inject.Inject
 
 @HiltViewModel
 class ClassDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val attendanceResourceUseCase: AttendanceResourceUseCase
+    private val attendanceResourceUseCase: AttendanceResourceUseCase,
+    private val attendanceRepository: AttendanceRepository
 ) : StatefulViewModel<Unit, Unit>(initialState = Unit) {
     val classId = savedStateHandle.get<Int>(CLASS_ID_ROUTE_ARG)!!
 
     private val _attendanceResources = MutableStateFlow<AttendanceResources?>(null)
     val attendanceResources = _attendanceResources.asStateFlow()
 
-    init {
+    fun onCardScanned(idm: String, classifications: Classifications) {
+        viewModelScope.launch {
+            attendanceRepository.registerAttendance(
+                idm = idm,
+                classId = classId,
+                classificationId = classifications.id
+            )
+            fetchAttendanceResources()
+        }
+    }
+
+    private fun fetchAttendanceResources() {
         viewModelScope.launch {
             attendanceResourceUseCase.execute(classId = classId)
                 .mapBoth(
@@ -30,6 +44,10 @@ class ClassDetailViewModel @Inject constructor(
                     failure = {},
                 )
         }
+    }
+
+    init {
+        fetchAttendanceResources()
     }
 
 }
