@@ -23,7 +23,9 @@ fun ArNavHost(
         modifier = modifier
     ) {
         homeScreen()
-        settingScreen()
+        settingScreen(
+            navController = navController
+        )
         classesNavigation(
             navController = navController
         )

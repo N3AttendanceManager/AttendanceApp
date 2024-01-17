@@ -1,4 +1,4 @@
-package xyz.miyayu.attendancereader.nfc.model
+package xyz.miyayu.attendancereader.feature.settings.nfc.model
 
 sealed interface StudentNfcCard {
     sealed interface StudentNfcCardWithStudentId : StudentNfcCard
