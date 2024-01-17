@@ -19,6 +19,7 @@ import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
 import xyz.miyayu.attendancereader.model.AtClass
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 internal fun ClassRoute(
@@ -45,14 +46,15 @@ private fun ClassScreen(
             onNewClassClick = onNewClassClick
         )
         classList.forEach { atClass ->
-            //TODO タイル状にする
+            val dateTimeText =
+                atClass.start.format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm"))
             Text(
-                text = atClass.start.toString(),
+                text = "$dateTimeText の授業",
                 modifier = Modifier
                     .clickable {
                         onClassSelected.invoke(atClass)
                     }
-                    .padding(8.dp)
+                    .padding(16.dp)
             )
         }
 
