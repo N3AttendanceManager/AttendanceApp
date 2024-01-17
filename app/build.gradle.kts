@@ -72,4 +72,5 @@ dependencies {
     implementation(projects.feature.settings)
     implementation(projects.feature.subjects)
     implementation(projects.feature.classlist)
+    implementation(projects.feature.classdetail)
 }

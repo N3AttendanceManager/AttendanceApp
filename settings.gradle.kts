@@ -31,3 +31,4 @@ include(":feature:subjects")
 
 
 include(":feature:classlist")
+include(":feature:classdetail")
