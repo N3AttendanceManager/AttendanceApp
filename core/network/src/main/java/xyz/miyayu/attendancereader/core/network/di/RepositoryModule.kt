@@ -9,6 +9,10 @@ import xyz.miyayu.attendancereader.core.network.BuildConfig
 import xyz.miyayu.attendancereader.core.network.FakeAuthRepository
 import xyz.miyayu.attendancereader.core.network.atclass.ClassRepository
 import xyz.miyayu.attendancereader.core.network.atclass.FakeClassRepository
+import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepository
+import xyz.miyayu.attendancereader.core.network.attendances.FakeAttendanceRepository
+import xyz.miyayu.attendancereader.core.network.classifications.ClassificationsRepository
+import xyz.miyayu.attendancereader.core.network.classifications.FakeClassificationsRepository
 import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
 import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
 import xyz.miyayu.attendancereader.core.network.student.FakeStudentRepository
@@ -75,6 +79,30 @@ object RepositoryModule {
     ): StudentRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeStudentRepository
+        } else {
+            TODO()
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideAttendanceRepository(
+        fakeAttendanceRepository: FakeAttendanceRepository
+    ): AttendanceRepository {
+        return if (BuildConfig.IS_DEV_SERVER) {
+            fakeAttendanceRepository
+        } else {
+            TODO()
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideClassificationsRepository(
+        fakeClassificationsRepository: FakeClassificationsRepository
+    ): ClassificationsRepository {
+        return if (BuildConfig.IS_DEV_SERVER) {
+            fakeClassificationsRepository
         } else {
             TODO()
         }

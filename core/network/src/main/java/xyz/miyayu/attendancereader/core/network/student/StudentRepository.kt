@@ -5,5 +5,6 @@ import xyz.miyayu.attendancereader.model.Student
 
 interface StudentRepository {
     suspend fun getAllStudent(): Result<List<Student>, Throwable>
+    suspend fun getStudents(departmentId: Int): Result<List<Student>, Throwable>
     suspend fun updateStudentIc(studentId: Int, icId: String): Result<Unit, Throwable>
 }

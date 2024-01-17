@@ -26,6 +26,8 @@ class FakeClassRepository @Inject constructor() : ClassRepository {
         ),
     )
     private var incrementNumber = atClassList.size
+    override suspend fun getAtClass(classId: Int): Result<AtClass?, Throwable> =
+        Ok(atClassList.firstOrNull { atClass -> atClass.id == classId })
 
 
     override suspend fun getAtClassList(subjectId: Int): Result<List<AtClass>, Throwable> =

@@ -9,7 +9,7 @@ import kotlin.random.Random
 
 @Singleton
 class FakeStudentRepository @Inject constructor() : StudentRepository {
-    private val students: MutableList<Student> = (1..50).map { index ->
+    val students: MutableList<Student> = (1..50).map { index ->
         Student(
             id = index,
             studentId = "S$index",
@@ -20,6 +20,8 @@ class FakeStudentRepository @Inject constructor() : StudentRepository {
     }.toMutableList()
 
     override suspend fun getAllStudent(): Result<List<Student>, Throwable> = Ok(students)
+    override suspend fun getStudents(departmentId: Int): Result<List<Student>, Throwable> =
+        Ok(students.filter { it.departmentId == departmentId })
 
     override suspend fun updateStudentIc(studentId: Int, icId: String): Result<Unit, Throwable> {
         students.replaceAll { if (it.id == studentId) it.copy(icId = icId) else it }
