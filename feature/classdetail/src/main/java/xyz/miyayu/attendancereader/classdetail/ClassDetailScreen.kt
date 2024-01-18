@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
 import xyz.miyayu.attendancereader.model.Attendance
 import xyz.miyayu.attendancereader.model.Classifications
@@ -55,7 +56,6 @@ private fun ClassDetailScreen(
     students: List<Student>,
     attendances: List<Attendance>,
     classifications: List<Classifications>,
-
     onScanButtonClick: () -> Unit,
     onAttendanceManuallySelected: (Student, Classifications) -> Unit,
 ) {
@@ -126,4 +126,35 @@ private fun LazyItemScope.StudentItem(
 @Composable
 private fun ClassDetailScreenPreview() {
     //TODO プレビュー作ってね❤️
+    ClassDetailScreen(
+        students = listOf(
+            Student(
+                id = 1,
+                studentId = "1",
+                name = "宮丸",
+                departmentId = 1,
+                icId = null
+
+            )
+        ),
+        attendances = listOf(
+            Attendance(
+                studentId = 1,
+                classId = 1,
+                teacherId = 1,
+                classificationId = 1
+            )
+        ),
+        classifications = listOf(
+            Classifications(
+                id = 1,
+                schoolId = 1,
+                name = "野澤",
+                isDecision = true,
+                isClassExclusionDecision = true
+            )
+        ),
+        onScanButtonClick = { /*TODO*/ },
+        onAttendanceManuallySelected = {student: Student, classifications: Classifications ->  }
+    )
 }
