@@ -1,6 +1,5 @@
 package xyz.miyayu.attendancereader.feature.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -72,8 +70,6 @@ private fun StudentCard(student: Student, modifier: Modifier = Modifier) {
             Cell(text = student.studentId)
             Cell(text = student.name)
             Cell(text = icText, fontSize = 10.sp)
-
-
         }
     }
 }
@@ -98,7 +94,9 @@ private fun RowScope.Cell(
             fontSize = fontSize,
             text = text,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
         )
     }
 }
