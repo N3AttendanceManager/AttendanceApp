@@ -23,8 +23,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
+import xyz.miyayu.attendancereader.model.Attendance
 import xyz.miyayu.attendancereader.model.Classifications
 import xyz.miyayu.attendancereader.model.Student
 
@@ -33,30 +35,52 @@ internal fun ClassDetailRoute(
     viewModel: ClassDetailViewModel, onScanButton: () -> Unit
 ) {
     val resources by viewModel.attendanceResources.collectAsState()
+
+    ClassDetailScreen(
+        onScanButtonClick = onScanButton,
+        students = resources?.students ?: emptyList(),
+        attendances = resources?.attendances ?: emptyList(),
+        classifications = resources?.classifications ?: emptyList(),
+        onAttendanceManuallySelected = { s, c ->
+            viewModel.onAttendanceManualSelected(
+                student = s,
+                classifications = c
+            )
+        }
+    )
+}
+
+@Composable
+private fun ClassDetailScreen(
+    students: List<Student>,
+    attendances: List<Attendance>,
+    classifications: List<Classifications>,
+
+    onScanButtonClick: () -> Unit,
+    onAttendanceManuallySelected: (Student, Classifications) -> Unit,
+) {
     var expandedStudent by remember { mutableStateOf<Student?>(null) }
 
     Column {
         ArAppBar(title = "生徒一覧", actions = {
-            IconButton(onClick = onScanButton) {
+            IconButton(onClick = onScanButtonClick) {
                 Icon(imageVector = Icons.Filled.CreditCard, contentDescription = null)
             }
         })
         LazyColumn {
-            items(resources?.students ?: emptyList()) { student ->
-                val attendance = resources?.attendances?.firstOrNull { it.studentId == student.id }
-                val classifications =
-                    resources?.classifications?.firstOrNull { it.id == attendance?.classificationId }
+            items(students) { student ->
+                val attendance = attendances.firstOrNull { it.studentId == student.id }
+                val classification =
+                    classifications.firstOrNull { it.id == attendance?.classificationId }
                 StudentItem(student = student,
-                    classifications = classifications,
+                    classifications = classification,
                     expanded = student == expandedStudent,
                     onOpenRequest = { expandedStudent = null },
                     dropDownItems = {
                         DropDownItems(
-                            classifications = resources?.classifications ?: emptyList(),
+                            classifications = classifications,
                             onSelected = {
-                                viewModel.onAttendanceManualSelected(
-                                    student = student, classifications = it
-                                )
+                                onAttendanceManuallySelected(student, it)
                                 expandedStudent = null
                             })
                     },
@@ -96,4 +120,10 @@ private fun LazyItemScope.StudentItem(
         )
     }
 
+}
+
+@Preview
+@Composable
+private fun ClassDetailScreenPreview() {
+    //TODO プレビュー作ってね❤️
 }
