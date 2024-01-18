@@ -1,23 +1,24 @@
 package xyz.miyayu.attendancereader.ui
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import xyz.miyayu.attendancereader.designsystem.component.ArAppBar
@@ -82,10 +83,12 @@ private fun ArAppNavigationBar(
                 selected = selected,
                 onClick = { onNavigateToDestination.invoke(it) },
                 icon = {
-                    Icon(
-                        imageVector = Icons.Filled.Image, contentDescription = stringResource(
+                    Image(
+                        painter = painterResource(id = it.drawableResId),
+                        contentDescription = stringResource(
                             id = it.titleTextId
-                        )
+                        ),
+                        modifier = Modifier.height(18.dp)
                     )
                 },
                 label = { Text(text = stringResource(id = it.titleTextId)) }
