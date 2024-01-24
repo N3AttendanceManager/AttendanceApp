@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,8 +35,15 @@ internal fun SettingRoute(
     onStudentSelected: (Student) -> Unit,
 
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val students by viewModel.students.collectAsState()
     SettingScreen(students = students, onStudentSelected = onStudentSelected)
+
+    if (uiState == UiState.Loading){
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    }
 }
 
 @Composable
@@ -43,7 +51,6 @@ private fun SettingScreen(
     students: List<Student>,
     onStudentSelected: (Student) -> Unit
 ) {
-
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -53,6 +60,7 @@ private fun SettingScreen(
                 modifier = Modifier.clickable { onStudentSelected(student) })
         }
     }
+
 }
 
 @Composable
