@@ -124,18 +124,17 @@ private fun LazyItemScope.StudentItem(
     onOpenRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .padding(16.dp)
-            .height(IntrinsicSize.Max)
-    ) {
-        Cell(text = student.studentId)
-        Cell(text = student.name)
-        Cell(text = classifications?.name ?: "未登録",fontSize = 15.sp)
-    }
-    DropdownMenu(
-        expanded = expanded, onDismissRequest = onOpenRequest, content = dropDownItems
-    )
+        Row(
+            modifier = modifier
+                .height(IntrinsicSize.Max)
+        ) {
+            Cell(text = student.studentId)
+            Cell(text = student.name)
+            Cell(text = classifications?.name ?: "未登録", fontSize = 15.sp)
+        }
+        DropdownMenu(
+            expanded = expanded, onDismissRequest = onOpenRequest, content = dropDownItems
+        )
 }
 
 
@@ -152,8 +151,7 @@ private fun RowScope.Cell(
                 width = 0.5.dp,
                 color = MaterialTheme.colorScheme.secondary,
             ),
-        contentAlignment = Alignment.Center
-
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             fontSize = fontSize,
@@ -170,7 +168,6 @@ private fun RowScope.Cell(
 @Preview
 @Composable
 private fun ClassDetailScreenPreview() {
-    //TODO プレビュー作ってね❤️
     PreviewSurface {
         ClassDetailScreen(
             students = listOf(
@@ -204,5 +201,55 @@ private fun ClassDetailScreenPreview() {
             onAttendanceManuallySelected = { student: Student, classifications: Classifications -> }
         )
     }
+}
 
+@Preview
+@Composable
+private fun StudentItemPreview() {
+    PreviewSurface {
+        LazyColumn {
+            item {
+                StudentItem(
+                    student = Student(
+                        id = 1,
+                        studentId = "S000A0001",
+                        name = "獅子王",
+                        departmentId = 1,
+                        icId = null
+
+                    ),
+                    classifications = Classifications(
+                        id = 1,
+                        schoolId = 1,
+                        name = "出席",
+                        isDecision = true,
+                        isClassExclusionDecision = true
+                    ),
+                    expanded = true,
+                    onOpenRequest = { },
+                    dropDownItems = { }
+                )
+                StudentItem(
+                    student = Student(
+                        id = 1,
+                        studentId = "S000A0001",
+                        name = "千空",
+                        departmentId = 1,
+                        icId = null
+
+                    ),
+                    classifications = Classifications(
+                        id = 1,
+                        schoolId = 1,
+                        name = "出席",
+                        isDecision = true,
+                        isClassExclusionDecision = true
+                    ),
+                    expanded = true,
+                    onOpenRequest = { },
+                    dropDownItems = { }
+                )
+            }
+        }
+    }
 }
