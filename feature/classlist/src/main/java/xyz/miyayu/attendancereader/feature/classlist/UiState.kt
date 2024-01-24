@@ -1,6 +1,8 @@
 package xyz.miyayu.attendancereader.feature.classlist
 
-sealed interface UiState {
-    data object Nothing : UiState
-    data object Loading : UiState
+sealed class UiState(
+    val isLoading: Boolean
+) {
+    data object Nothing : UiState(isLoading = false)
+    data object Loading : UiState(isLoading = true)
 }
