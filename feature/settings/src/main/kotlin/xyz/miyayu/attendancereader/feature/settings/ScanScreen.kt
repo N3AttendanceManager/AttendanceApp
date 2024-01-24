@@ -15,8 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import xyz.miyayu.attendancereader.core.network.student.StudentRepository
 import xyz.miyayu.attendancereader.designsystem.R
+import xyz.miyayu.attendancereader.designsystem.component.PreviewSurface
 import xyz.miyayu.attendancereader.designsystem.component.RememberNfcRead
 
 @OptIn(ExperimentalStdlibApi::class)
@@ -37,9 +40,21 @@ fun ScanRoute(
                 }
                 viewModel.consumeUiEvents(uiEvent)
             }
-
         }
     }
+    RememberNfcRead(onRead = {
+        viewModel.onIcFetched(idm = it)
+    })
+    ScanScreen(
+        isLoading = uiState == UiState.Loading
+    )
+}
+
+
+@Composable
+private fun ScanScreen(
+    isLoading: Boolean
+) {
     Column {
         Image(
             painter = painterResource(id = R.drawable.please_scan),
@@ -50,17 +65,21 @@ fun ScanRoute(
                 .padding(16.dp)
         )
     }
-
-    RememberNfcRead(onRead = {
-        viewModel.onIcFetched(idm = it)
-    })
     //カードを読み取るときの処理
-    if (uiState is UiState.Loading) {
+    if (isLoading){
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     }
 }
 
-
+@Preview
+@Composable
+private fun ScanRouteScreenPreview() {
+    PreviewSurface {
+        ScanScreen(
+            isLoading = false
+        )
+    }
+}
 
