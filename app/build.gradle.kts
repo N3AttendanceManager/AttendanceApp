@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.attendancereader.android.application)
     alias(libs.plugins.attendancereader.android.application.compose)
     alias(libs.plugins.attendancereader.android.hilt)
-    alias(libs.plugins.attendancereader.android.application.flavors)
 
     id("com.google.dagger.hilt.android")
 }
@@ -22,6 +21,7 @@ android {
         debug {
             applicationIdSuffix = ".dev"
         }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -29,10 +29,15 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debugWithFakeServer") {
+            println("initlized.")
+            initWith(getByName("debug"))
+        }
     }
 }
 
 dependencies {
+
     implementation(libs.kotlin.stdlib)
     implementation("androidx.compose.compiler:compiler:1.4.3")// 互換性のあるバージョンに更新
 

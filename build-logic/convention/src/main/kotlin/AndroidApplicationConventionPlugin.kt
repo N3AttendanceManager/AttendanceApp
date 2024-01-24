@@ -10,6 +10,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
+                // com.android.applicationが読み込まれた後ではないとエラーになる
+                apply("attendancereader.android.application.flavors")
             }
 
             extensions.configure<ApplicationExtension> {
