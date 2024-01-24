@@ -33,7 +33,6 @@ fun ArApp(
     arAppState: ArAppState = rememberArAppState()
 ) {
     Scaffold(
-
         bottomBar = {
             val currentTop = arAppState.currentTopLevelDestination
             ArAppNavigationBar(
@@ -48,8 +47,7 @@ fun ArApp(
         }
     ) {
         Column(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .padding(it)
                 .consumeWindowInsets(it)
                 .windowInsetsPadding(
@@ -78,7 +76,6 @@ private fun ArAppNavigationBar(
     modifier: Modifier = Modifier
 ) {
     Log.d("Current", currentDestination?.hierarchy?.toList().toString())
-
     ArNavigationBar(
         modifier = modifier
     ) {
