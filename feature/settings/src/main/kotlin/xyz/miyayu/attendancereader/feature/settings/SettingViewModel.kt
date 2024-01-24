@@ -37,12 +37,16 @@ class SettingViewModel @Inject constructor(
             }
         }
     }
+
+
+
     private fun fetchStudents() {
         viewModelScope.launch(Dispatchers.IO) {
             setUiState(UiState.Loading)
             studentRepository.getAllStudent().mapBoth(
                 success = { _students.value = it },
                 failure = {})
+            setUiState(UiState.Normal)
         }
     }
 
