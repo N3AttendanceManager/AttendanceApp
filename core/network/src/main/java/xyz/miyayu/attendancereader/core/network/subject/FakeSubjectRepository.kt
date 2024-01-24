@@ -2,9 +2,11 @@ package xyz.miyayu.attendancereader.core.network.subject
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.model.Subject
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 @Singleton
 class FakeSubjectRepository @Inject constructor(
@@ -34,10 +36,15 @@ class FakeSubjectRepository @Inject constructor(
         Subject(id = 21, name = "キャリアデザイン2", departmentId = 2)
     )
 
-    override suspend fun getAllSubject(): Result<List<Subject>, Throwable> = Ok(
-        subjects
-    )
+    override suspend fun getAllSubject(): Result<List<Subject>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(
+            subjects
+        )
+    }
 
-    override suspend fun getSubject(subjectId: Int): Result<Subject?, Throwable> =
-        Ok(subjects.find { it.id == subjectId })
+    override suspend fun getSubject(subjectId: Int): Result<Subject?, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(subjects.find { it.id == subjectId })
+    }
 }

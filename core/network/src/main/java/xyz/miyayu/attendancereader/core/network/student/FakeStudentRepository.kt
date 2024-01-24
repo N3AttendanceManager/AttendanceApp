@@ -2,6 +2,7 @@ package xyz.miyayu.attendancereader.core.network.student
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.model.Student
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,11 +24,18 @@ class FakeStudentRepository @Inject constructor() : StudentRepository {
         )
     }.toMutableList()
 
-    override suspend fun getAllStudent(): Result<List<Student>, Throwable> = Ok(students)
-    override suspend fun getStudents(departmentId: Int): Result<List<Student>, Throwable> =
-        Ok(students.filter { it.departmentId == departmentId })
+    override suspend fun getAllStudent(): Result<List<Student>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(students)
+    }
+
+    override suspend fun getStudents(departmentId: Int): Result<List<Student>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(students.filter { it.departmentId == departmentId })
+    }
 
     override suspend fun updateStudentIc(studentId: Int, icId: String): Result<Unit, Throwable> {
+        delay(Random.nextLong(1000))
         students.replaceAll { if (it.id == studentId) it.copy(icId = icId) else it }
         return Ok(Unit)
     }

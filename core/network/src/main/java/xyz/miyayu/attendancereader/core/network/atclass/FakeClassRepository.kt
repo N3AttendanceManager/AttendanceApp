@@ -2,12 +2,14 @@ package xyz.miyayu.attendancereader.core.network.atclass
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.model.AtClass
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 @Singleton
 class FakeClassRepository @Inject constructor() : ClassRepository {
@@ -26,18 +28,23 @@ class FakeClassRepository @Inject constructor() : ClassRepository {
         ),
     )
     private var incrementNumber = atClassList.size
-    override suspend fun getAtClass(classId: Int): Result<AtClass?, Throwable> =
-        Ok(atClassList.firstOrNull { atClass -> atClass.id == classId })
+    override suspend fun getAtClass(classId: Int): Result<AtClass?, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(atClassList.firstOrNull { atClass -> atClass.id == classId })
+    }
 
 
-    override suspend fun getAtClassList(subjectId: Int): Result<List<AtClass>, Throwable> =
-        Ok(atClassList.filter { it.subjectId == subjectId })
+    override suspend fun getAtClassList(subjectId: Int): Result<List<AtClass>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(atClassList.filter { it.subjectId == subjectId })
+    }
 
     override suspend fun createAtClass(
         subjectId: Int,
         start: LocalTime,
         end: LocalTime
     ): Result<Unit, Throwable> {
+        delay(Random.nextLong(1000))
         atClassList.add(
             AtClass(
                 id = ++incrementNumber,
