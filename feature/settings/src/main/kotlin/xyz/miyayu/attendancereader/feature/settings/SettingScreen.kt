@@ -32,6 +32,7 @@ import xyz.miyayu.attendancereader.model.Student
 internal fun SettingRoute(
     viewModel: SettingViewModel,
     onStudentSelected: (Student) -> Unit,
+
 ) {
     val students by viewModel.students.collectAsState()
     SettingScreen(students = students, onStudentSelected = onStudentSelected)
