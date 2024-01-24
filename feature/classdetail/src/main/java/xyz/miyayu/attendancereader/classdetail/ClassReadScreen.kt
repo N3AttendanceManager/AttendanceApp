@@ -31,13 +31,11 @@ internal fun ClassReadRoute(
     viewModel: ClassDetailViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     val resources by viewModel.attendanceResources.collectAsState()
     val lastScanned by viewModel.lastScannedStudents.collectAsState()
     val lastClassification by viewModel.lastClassification.collectAsState()
     val classificationsList = resources?.classifications ?: emptyList()
     var selectedChip by remember { mutableIntStateOf(0) }
-
 
     RememberNfcRead(onRead = {
         viewModel.onCardScanned(
@@ -70,5 +68,5 @@ internal fun ClassReadRoute(
             CircularProgressIndicator()
         }
     }
-
 }
+

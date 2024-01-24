@@ -13,27 +13,31 @@ import xyz.miyayu.attendancereader.designsystem.viewmodel.StatefulViewModel
 import xyz.miyayu.attendancereader.model.Student
 import javax.inject.Inject
 
+
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val studentRepository: StudentRepository
-) : StatefulViewModel<UiEvent, Unit>(initialState = Unit) {
+) : StatefulViewModel<UiEvent, UiState>(initialState = UiState.Normal) {
     private val _students = MutableStateFlow<List<Student>>(emptyList())
     val students = _students.asStateFlow()
-
     private val _scanningStudent = MutableStateFlow<Student?>(null)
     val scanningStudent = _scanningStudent.asStateFlow()
+
 
     fun onIcFetched(idm: String) {
         scanningStudent.value?.let { student ->
             viewModelScope.launch {
+                setUiState(UiState.Loading)
                 studentRepository.updateStudentIc(
                     studentId = student.id,
                     icId = idm
                 )
+                setUiState(UiState.Normal)
                 addUiEvents(UiEvent.IcScanned)
             }
         }
     }
+
 
     private fun fetchStudents() {
         viewModelScope.launch(Dispatchers.IO) {
