@@ -45,10 +45,10 @@ class ArAppState(
             else -> null
         }
 
-    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
+    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination,current: TopLevelDestination?) {
         val topLevelNavOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
+                saveState = topLevelDestination != current
             }
 
             launchSingleTop = true

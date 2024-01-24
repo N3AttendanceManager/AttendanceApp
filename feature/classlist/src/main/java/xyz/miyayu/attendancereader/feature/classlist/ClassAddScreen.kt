@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -21,6 +22,8 @@ import androidx.compose.runtime.Composable
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -58,10 +61,13 @@ internal fun ClassAddRoute(
         }
     }
 
+    val uiState by viewModel.uiState.collectAsState()
+
     ClassAddScreen(
         onSelectedClassTime = { classTimes ->
             viewModel.createNewClass(classTimes)
-        }
+        },
+        isLoading = uiState.isLoading
     )
 }
 
@@ -70,6 +76,7 @@ internal fun ClassAddRoute(
  */
 @Composable
 private fun ClassAddScreen(
+    isLoading: Boolean,
     onSelectedClassTime: (ClassTimes) -> Unit
 ) {
     //TODO 画面の実装をここにする！
@@ -88,6 +95,9 @@ private fun ClassAddScreen(
             onClick = { onSelectedClassTime.invoke(selectedClassTime.value) },
             text = "追加"
         )
+    }
+    if (isLoading) Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
     }
 }
 
@@ -138,7 +148,8 @@ fun Dropdown(selectedClassTime: MutableState<ClassTimes>) {
 private fun ClassAddScreenPreview() {
     PreviewSurface {
         ClassAddScreen(
-            onSelectedClassTime = {}
+            onSelectedClassTime = {},
+            isLoading = true
         )
     }
 }

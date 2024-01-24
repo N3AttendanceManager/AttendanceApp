@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CreditCard
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -47,6 +49,8 @@ internal fun ClassDetailRoute(
     viewModel: ClassDetailViewModel, onScanButton: () -> Unit
 ) {
     val resources by viewModel.attendanceResources.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+
 
     ClassDetailScreen(
         onScanButtonClick = onScanButton,
@@ -58,12 +62,17 @@ internal fun ClassDetailRoute(
                 student = s,
                 classifications = c
             )
+        },
+        isLoading = when (uiState) {
+            UiState.Loading -> true
+            UiState.Normal -> false
         }
     )
 }
 
 @Composable
 private fun ClassDetailScreen(
+    isLoading: Boolean,
     students: List<Student>,
     attendances: List<Attendance>,
     classifications: List<Classifications>,
@@ -71,6 +80,7 @@ private fun ClassDetailScreen(
     onAttendanceManuallySelected: (Student, Classifications) -> Unit,
 ) {
     var expandedStudent by remember { mutableStateOf<Student?>(null) }
+
 
     Column {
         ArAppBar(title = "生徒一覧", actions = {
@@ -91,8 +101,8 @@ private fun ClassDetailScreen(
                     expanded = student == expandedStudent,
                     onOpenRequest = { expandedStudent = null },
                     dropDownItems = {
-                        DropDownItems(
-                            classifications = classifications,
+
+                        DropDownItems(classifications = classifications,
                             onSelected = {
                                 onAttendanceManuallySelected(student, it)
                                 expandedStudent = null
@@ -102,6 +112,11 @@ private fun ClassDetailScreen(
                         expandedStudent = student
                     })
             }
+        }
+    }
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
     }
 }
@@ -124,17 +139,17 @@ private fun LazyItemScope.StudentItem(
     onOpenRequest: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-        Row(
-            modifier = modifier
-                .height(IntrinsicSize.Max)
-        ) {
-            Cell(text = student.studentId)
-            Cell(text = student.name)
-            Cell(text = classifications?.name ?: "未登録", fontSize = 15.sp)
-        }
-        DropdownMenu(
-            expanded = expanded, onDismissRequest = onOpenRequest, content = dropDownItems
-        )
+    Row(
+        modifier = modifier
+            .height(IntrinsicSize.Max)
+    ) {
+        Cell(text = student.studentId)
+        Cell(text = student.name)
+        Cell(text = classifications?.name ?: "未登録", fontSize = 15.sp)
+    }
+    DropdownMenu(
+        expanded = expanded, onDismissRequest = onOpenRequest, content = dropDownItems
+    )
 }
 
 
@@ -198,7 +213,8 @@ private fun ClassDetailScreenPreview() {
                 )
             ),
             onScanButtonClick = { /*TODO*/ },
-            onAttendanceManuallySelected = { student: Student, classifications: Classifications -> }
+            onAttendanceManuallySelected = { student: Student, classifications: Classifications -> },
+            isLoading = false
         )
     }
 }

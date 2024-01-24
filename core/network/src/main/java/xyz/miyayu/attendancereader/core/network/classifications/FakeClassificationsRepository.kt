@@ -2,9 +2,11 @@ package xyz.miyayu.attendancereader.core.network.classifications
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import kotlinx.coroutines.delay
 import xyz.miyayu.attendancereader.model.Classifications
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 @Singleton
 class FakeClassificationsRepository @Inject constructor() : ClassificationsRepository {
@@ -25,6 +27,8 @@ class FakeClassificationsRepository @Inject constructor() : ClassificationsRepos
         ),
     )
 
-    override suspend fun getClassifications(): Result<List<Classifications>, Throwable> =
-        Ok(classifications)
+    override suspend fun getClassifications(): Result<List<Classifications>, Throwable> {
+        delay(Random.nextLong(1000))
+        return Ok(classifications)
+    }
 }
