@@ -50,4 +50,10 @@ internal object NetworkModule {
         addConverterFactory(json.asConverterFactory(contentType))
         baseUrl(BASE_URL)
     }.build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofitService(
+        retrofit: Retrofit
+    ): NetworkService = retrofit.create(NetworkService::class.java)
 }
