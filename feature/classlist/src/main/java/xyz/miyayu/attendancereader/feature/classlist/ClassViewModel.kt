@@ -22,8 +22,8 @@ class ClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val subjectRepository: SubjectRepository,
     private val classRepository: ClassRepository
-) : StatefulViewModel<ClassAddUiEvents, Unit>(
-    initialState = Unit
+) : StatefulViewModel<ClassAddUiEvents, UiState>(
+    initialState = UiState.Nothing
 ) {
     private val _hash = MutableStateFlow<UUID>(UUID.randomUUID())
     val hash = _hash.asStateFlow()
@@ -42,21 +42,25 @@ class ClassViewModel @Inject constructor(
     fun fetchClassList() {
         Log.d(this::class.simpleName, "fetchClassList")
         viewModelScope.launch(Dispatchers.IO) {
+            setUiState(UiState.Loading)
             classRepository.getAtClassList(subjectId = subjectId).mapBoth(
                 success = {
                     atClassList.value = it
                 },
                 failure = { }
             )
+            setUiState(UiState.Nothing)
         }
     }
 
     fun fetchSubject() {
         viewModelScope.launch(Dispatchers.IO) {
+            setUiState(UiState.Loading)
             subjectRepository.getSubject(subjectId = subjectId).mapBoth(
                 success = { department.value = it },
                 failure = { }
             )
+            setUiState(UiState.Nothing)
         }
     }
 
@@ -64,6 +68,7 @@ class ClassViewModel @Inject constructor(
     fun createNewClass(selectedClassTimes: ClassTimes) {
         Log.d(this::class.simpleName, "createNewClass")
         viewModelScope.launch(Dispatchers.IO) {
+            setUiState(UiState.Loading)
             classRepository.createAtClass(
                 subjectId = subjectId,
                 start = selectedClassTimes.getStartDateTime(),
@@ -76,6 +81,7 @@ class ClassViewModel @Inject constructor(
                 },
                 failure = { addUiEvents(ClassAddUiEvents.Failed) }
             )
+            setUiState(UiState.Nothing)
         }
     }
 }
