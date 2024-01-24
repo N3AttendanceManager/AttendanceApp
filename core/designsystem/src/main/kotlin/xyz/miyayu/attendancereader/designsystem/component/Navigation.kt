@@ -11,6 +11,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import xyz.miyayu.attendancereader.designsystem.theme.AttendanceReaderTheme
@@ -50,6 +51,8 @@ fun RowScope.ArNavigationBarItem(
         colors = NavigationBarItemDefaults.colors(
             selectedTextColor = MaterialTheme.colorScheme.onPrimary,
             unselectedTextColor = MaterialTheme.colorScheme.onPrimary,
+            selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+            indicatorColor = Color(0xFFAEDFE7)
         )
     )
 }
@@ -65,7 +68,7 @@ fun ArNavigationPreview() {
                     selected = index == 0,
                     onClick = { /*TODO*/ },
                     icon = { Icon(imageVector = Icons.Filled.AcUnit, contentDescription = null) },
-                    label = { Text(text = item) }
+                    label = { Text(text = item) },
                 )
             }
         }
