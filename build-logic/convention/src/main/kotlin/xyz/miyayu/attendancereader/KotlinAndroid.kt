@@ -29,6 +29,11 @@ internal fun Project.configureKotlinAndroid(
 
     dependencies {
         add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
+        add("debugImplementation", "com.squareup.leakcanary:leakcanary-android:3.0-alpha-1")
+        add(
+            "debugWithFakeServerImplementation",
+            "com.squareup.leakcanary:leakcanary-android:3.0-alpha-1"
+        )
     }
 }
 
