@@ -39,7 +39,7 @@ fun RememberNfcRead(
                     nfcAdapter.enableReaderMode(
                         activity,
                         adapterCallBack,
-                        NfcAdapter.FLAG_READER_NFC_F,
+                        NfcAdapter.FLAG_READER_NFC_A or NfcAdapter.FLAG_READER_NFC_F,
                         null
                     )
                 }
