@@ -28,6 +28,7 @@ class SubjectViewModel @Inject constructor(
 
     fun fetchData() {
         viewModelScope.launch(Dispatchers.IO) {
+            setUiState(SubjectUiState.Loading)
             getSubjectAndDepartmentUseCase.execute().mapBoth(
                 success = { pair ->
                     _subjects.value = pair.subjects
@@ -35,6 +36,7 @@ class SubjectViewModel @Inject constructor(
                 },
                 failure = {}
             )
+            setUiState(SubjectUiState.Nothing)
         }
     }
 }
