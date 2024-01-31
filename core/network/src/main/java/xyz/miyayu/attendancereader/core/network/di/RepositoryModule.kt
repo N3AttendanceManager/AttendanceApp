@@ -21,6 +21,7 @@ import xyz.miyayu.attendancereader.core.network.student.StudentRepository
 import xyz.miyayu.attendancereader.core.network.student.StudentRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.subject.FakeSubjectRepository
 import xyz.miyayu.attendancereader.core.network.subject.SubjectRepository
+import xyz.miyayu.attendancereader.core.network.subject.SubjectRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -42,11 +43,12 @@ object RepositoryModule {
     @Singleton
     fun provideSubjectRepository(
         fakeSubjectRepository: FakeSubjectRepository,
+        subjectRepositoryImpl: SubjectRepositoryImpl
     ): SubjectRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeSubjectRepository
         } else {
-            fakeSubjectRepository
+            subjectRepositoryImpl
         }
     }
 

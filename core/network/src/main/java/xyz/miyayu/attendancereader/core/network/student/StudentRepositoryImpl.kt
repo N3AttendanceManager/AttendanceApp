@@ -8,6 +8,7 @@ import kotlinx.coroutines.async
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import xyz.miyayu.attendancereader.core.network.NetworkService
+import xyz.miyayu.attendancereader.core.network.convert.toResult
 import xyz.miyayu.attendancereader.core.network.model.IcCardRegisterBody
 import xyz.miyayu.attendancereader.model.Student
 import javax.inject.Inject
@@ -19,14 +20,9 @@ class StudentRepositoryImpl @Inject constructor(
     private val json: Json
 ) : StudentRepository {
     override suspend fun getAllStudent(): Result<List<Student>, Throwable> {
-        val result = networkService.getStudents()
-        if (!result.isSuccessful) {
-            return Err(Throwable("失敗!"))
+        return networkService.getStudents().toResult {
+            json.decodeFromJsonElement<List<Student>>(it)
         }
-
-        val jsonObject = result.body()!!["students"]!!
-        val decodeResult = json.decodeFromJsonElement<List<Student>>(jsonObject)
-        return Ok(decodeResult)
     }
 
     override suspend fun getStudents(departmentId: Int): Result<List<Student>, Throwable> {

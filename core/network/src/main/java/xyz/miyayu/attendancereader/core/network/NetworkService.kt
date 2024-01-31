@@ -17,4 +17,7 @@ interface NetworkService {
 
     @GET("department")
     suspend fun getDepartments(): Response<List<Department>>
+
+    @GET("subject")
+    suspend fun getSubject(): Response<JsonObject>
 }
