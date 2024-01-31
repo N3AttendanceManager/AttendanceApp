@@ -14,6 +14,7 @@ import xyz.miyayu.attendancereader.core.network.attendances.FakeAttendanceReposi
 import xyz.miyayu.attendancereader.core.network.classifications.ClassificationsRepository
 import xyz.miyayu.attendancereader.core.network.classifications.FakeClassificationsRepository
 import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
+import xyz.miyayu.attendancereader.core.network.department.DepartmentRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
 import xyz.miyayu.attendancereader.core.network.student.FakeStudentRepository
 import xyz.miyayu.attendancereader.core.network.student.StudentRepository
@@ -53,11 +54,12 @@ object RepositoryModule {
     @Singleton
     fun provideDepartmentRepository(
         fakeDepartmentRepository: FakeDepartmentRepository,
+        departmentRepositoryImpl: DepartmentRepositoryImpl
     ): DepartmentRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeDepartmentRepository
         } else {
-            fakeDepartmentRepository
+            departmentRepositoryImpl
         }
     }
 
