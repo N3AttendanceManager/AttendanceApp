@@ -16,5 +16,5 @@ interface AttendanceRepository {
         studentId: Int,
         classId: Int,
         classificationId: Int
-    ): Result<Student?, Throwable>
+    ): Result<Unit, Throwable>
 }

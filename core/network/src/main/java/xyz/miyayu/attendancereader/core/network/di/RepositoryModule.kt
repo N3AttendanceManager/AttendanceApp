@@ -8,17 +8,23 @@ import xyz.miyayu.attendancereader.core.network.AuthRepository
 import xyz.miyayu.attendancereader.core.network.BuildConfig
 import xyz.miyayu.attendancereader.core.network.FakeAuthRepository
 import xyz.miyayu.attendancereader.core.network.atclass.ClassRepository
+import xyz.miyayu.attendancereader.core.network.atclass.ClassRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.atclass.FakeClassRepository
 import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepository
+import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.attendances.FakeAttendanceRepository
 import xyz.miyayu.attendancereader.core.network.classifications.ClassificationsRepository
+import xyz.miyayu.attendancereader.core.network.classifications.ClassificationsRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.classifications.FakeClassificationsRepository
 import xyz.miyayu.attendancereader.core.network.department.DepartmentRepository
+import xyz.miyayu.attendancereader.core.network.department.DepartmentRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.department.FakeDepartmentRepository
 import xyz.miyayu.attendancereader.core.network.student.FakeStudentRepository
 import xyz.miyayu.attendancereader.core.network.student.StudentRepository
+import xyz.miyayu.attendancereader.core.network.student.StudentRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.subject.FakeSubjectRepository
 import xyz.miyayu.attendancereader.core.network.subject.SubjectRepository
+import xyz.miyayu.attendancereader.core.network.subject.SubjectRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -32,7 +38,7 @@ object RepositoryModule {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeAuthRepository
         } else {
-            TODO("本番環境が実装されたらそれを返す")
+            fakeAuthRepository
         }
     }
 
@@ -40,11 +46,12 @@ object RepositoryModule {
     @Singleton
     fun provideSubjectRepository(
         fakeSubjectRepository: FakeSubjectRepository,
+        subjectRepositoryImpl: SubjectRepositoryImpl
     ): SubjectRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeSubjectRepository
         } else {
-            TODO("本番環境が実装されたらそれを返す")
+            subjectRepositoryImpl
         }
     }
 
@@ -52,11 +59,12 @@ object RepositoryModule {
     @Singleton
     fun provideDepartmentRepository(
         fakeDepartmentRepository: FakeDepartmentRepository,
+        departmentRepositoryImpl: DepartmentRepositoryImpl
     ): DepartmentRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeDepartmentRepository
         } else {
-            TODO("本番環境が実装されたらそれを返す")
+            departmentRepositoryImpl
         }
     }
 
@@ -64,47 +72,51 @@ object RepositoryModule {
     @Singleton
     fun provideClassRepository(
         fakeClassRepository: FakeClassRepository,
+        classRepositoryImpl: ClassRepositoryImpl
     ): ClassRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeClassRepository
         } else {
-            TODO("本番環境が実装されたらそれを返す")
+            classRepositoryImpl
         }
     }
 
     @Provides
     @Singleton
     fun provideStudentRepository(
-        fakeStudentRepository: FakeStudentRepository
+        fakeStudentRepository: FakeStudentRepository,
+        studentRepositoryImpl: StudentRepositoryImpl
     ): StudentRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeStudentRepository
         } else {
-            TODO()
+            studentRepositoryImpl
         }
     }
 
     @Provides
     @Singleton
     fun provideAttendanceRepository(
-        fakeAttendanceRepository: FakeAttendanceRepository
+        fakeAttendanceRepository: FakeAttendanceRepository,
+        attendanceRepositoryImpl: AttendanceRepositoryImpl
     ): AttendanceRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeAttendanceRepository
         } else {
-            TODO()
+            attendanceRepositoryImpl
         }
     }
 
     @Provides
     @Singleton
     fun provideClassificationsRepository(
-        fakeClassificationsRepository: FakeClassificationsRepository
+        fakeClassificationsRepository: FakeClassificationsRepository,
+        classificationsRepositoryImpl: ClassificationsRepositoryImpl
     ): ClassificationsRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeClassificationsRepository
         } else {
-            TODO()
+            classificationsRepositoryImpl
         }
     }
 }

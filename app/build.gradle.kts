@@ -32,6 +32,7 @@ android {
         getByName("debugWithFakeServer") {
             println("initlized.")
             initWith(getByName("debug"))
+            applicationIdSuffix = ".devsec"
         }
     }
 }

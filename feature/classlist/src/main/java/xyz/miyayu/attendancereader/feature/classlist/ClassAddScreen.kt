@@ -105,7 +105,6 @@ private fun ClassAddScreen(
 fun Dropdown(selectedClassTime: MutableState<ClassTimes>) {
     val options = ClassTimes.entries.toTypedArray() // 時限のオプションClassTimes.values() // 時限のオプション
     val expanded = remember { mutableStateOf(false) }
-    val selectedOptionText = remember { mutableStateOf(options[0]) }
 
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -116,7 +115,7 @@ fun Dropdown(selectedClassTime: MutableState<ClassTimes>) {
             .clickable { expanded.value = !expanded.value },
     ) {
         Text(
-            text = selectedOptionText.value.zigen,
+            text = selectedClassTime.value.zigen,
             modifier = Modifier.padding(start = 10.dp)
         )
         Icon(
@@ -130,7 +129,7 @@ fun Dropdown(selectedClassTime: MutableState<ClassTimes>) {
             options.forEach { option ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedOptionText.value = option
+                        selectedClassTime.value = option
                         expanded.value = false
                     },
                     text = {

@@ -60,7 +60,6 @@ class ClassDetailViewModel @Inject constructor(
                 classificationId = classifications.id
             ).mapBoth(
                 success = {
-                    _lastScannedStudents.value = it
                     _lastClassification.value = classifications
                 },
                 failure = {}
