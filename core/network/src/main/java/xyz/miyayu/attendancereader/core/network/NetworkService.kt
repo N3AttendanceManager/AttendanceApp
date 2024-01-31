@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import xyz.miyayu.attendancereader.core.network.model.IcCardRegisterBody
+import xyz.miyayu.attendancereader.model.AtCreateClass
 import xyz.miyayu.attendancereader.model.Department
 
 interface NetworkService {
@@ -20,4 +21,10 @@ interface NetworkService {
 
     @GET("subject")
     suspend fun getSubject(): Response<JsonObject>
+
+    @GET("class")
+    suspend fun getClasses(): Response<JsonObject>
+
+    @POST("class")
+    suspend fun addClass(@Body atCreateClass: AtCreateClass): Response<Unit>
 }

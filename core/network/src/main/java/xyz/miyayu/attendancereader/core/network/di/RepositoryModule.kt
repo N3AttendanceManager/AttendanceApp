@@ -8,6 +8,7 @@ import xyz.miyayu.attendancereader.core.network.AuthRepository
 import xyz.miyayu.attendancereader.core.network.BuildConfig
 import xyz.miyayu.attendancereader.core.network.FakeAuthRepository
 import xyz.miyayu.attendancereader.core.network.atclass.ClassRepository
+import xyz.miyayu.attendancereader.core.network.atclass.ClassRepositoryImpl
 import xyz.miyayu.attendancereader.core.network.atclass.FakeClassRepository
 import xyz.miyayu.attendancereader.core.network.attendances.AttendanceRepository
 import xyz.miyayu.attendancereader.core.network.attendances.FakeAttendanceRepository
@@ -69,11 +70,12 @@ object RepositoryModule {
     @Singleton
     fun provideClassRepository(
         fakeClassRepository: FakeClassRepository,
+        classRepositoryImpl: ClassRepositoryImpl
     ): ClassRepository {
         return if (BuildConfig.IS_DEV_SERVER) {
             fakeClassRepository
         } else {
-            fakeClassRepository
+            classRepositoryImpl
         }
     }
 
