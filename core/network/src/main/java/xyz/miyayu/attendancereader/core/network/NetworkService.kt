@@ -27,4 +27,7 @@ interface NetworkService {
 
     @POST("class")
     suspend fun addClass(@Body atCreateClass: AtCreateClass): Response<Unit>
+
+    @GET("AttendanceClass")
+    suspend fun getAttendanceClasses(): Response<JsonObject>
 }
