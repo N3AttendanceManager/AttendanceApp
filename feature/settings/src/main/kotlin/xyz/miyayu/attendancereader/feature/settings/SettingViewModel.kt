@@ -34,10 +34,10 @@ class SettingViewModel @Inject constructor(
                 )
                 setUiState(UiState.Normal)
                 addUiEvents(UiEvent.IcScanned)
+                fetchStudents()
             }
         }
     }
-
 
 
     private fun fetchStudents() {
