@@ -21,7 +21,7 @@ class StudentRepositoryImpl @Inject constructor(
 ) : StudentRepository {
     override suspend fun getAllStudent(): Result<List<Student>, Throwable> {
         return networkService.getStudents().toResult {
-            json.decodeFromJsonElement<List<Student>>(it)
+            json.decodeFromJsonElement<List<Student>>(it["students"]!!)
         }
     }
 
