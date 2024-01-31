@@ -1,13 +1,12 @@
-package xyz.miyayu.attendancereader.model
+package xyz.miyayu.attendancereader.core.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Attendance(
-    val studentId: Int,
+data class AttendanceRegisterWithIc(
+    val icId: String,
     val classId: Int,
-    val teacherId: Int,
     @SerialName("atClassificationId")
     val classificationId: Int
 )

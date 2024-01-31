@@ -5,6 +5,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import xyz.miyayu.attendancereader.core.network.model.AttendanceRegisterManual
+import xyz.miyayu.attendancereader.core.network.model.AttendanceRegisterWithIc
 import xyz.miyayu.attendancereader.core.network.model.IcCardRegisterBody
 import xyz.miyayu.attendancereader.model.AtCreateClass
 import xyz.miyayu.attendancereader.model.Department
@@ -30,4 +32,13 @@ interface NetworkService {
 
     @GET("AttendanceClass")
     suspend fun getAttendanceClasses(): Response<JsonObject>
+
+    @POST("attendance/manual")
+    suspend fun registerManualAttendance(@Body attendanceRegisterManual: AttendanceRegisterManual): Response<Unit>
+
+    @POST("attendance/ic")
+    suspend fun registerIcAttendance(@Body attendanceRegisterWithIc: AttendanceRegisterWithIc): Response<JsonObject>
+
+    @GET("attendance")
+    suspend fun getAllAttendances(): Response<JsonObject>
 }

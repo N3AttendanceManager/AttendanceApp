@@ -67,12 +67,12 @@ class FakeAttendanceRepository @Inject constructor(
         studentId: Int,
         classId: Int,
         classificationId: Int
-    ): Result<Student?, Throwable> {
+    ): Result<Unit, Throwable> {
         delay(Random.nextLong(1000))
 
         val student =
             studentRepository.getAllStudent().get()!!.firstOrNull { it.id == studentId }
-                ?: return Ok(null)
+                ?: return Ok(Unit)
 
         if (attendances.any { it.studentId == student.id && it.classId == classId }) {
             attendances.replaceAll {
@@ -91,6 +91,6 @@ class FakeAttendanceRepository @Inject constructor(
                 )
             )
         }
-        return Ok(student)
+        return Ok(Unit)
     }
 }
