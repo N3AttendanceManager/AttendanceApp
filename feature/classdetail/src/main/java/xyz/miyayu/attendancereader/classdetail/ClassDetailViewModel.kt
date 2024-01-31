@@ -83,7 +83,6 @@ class ClassDetailViewModel @Inject constructor(
 
         }
     }
-
     init {
         fetchAttendanceResources()
     }
